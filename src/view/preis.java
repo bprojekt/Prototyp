@@ -18,6 +18,7 @@ public class preis extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					System.out.println("lauch");
 					preis frame = new preis();
 					frame.setVisible(true);
 				} catch (Exception e) {
