@@ -1,13 +1,19 @@
 package view;
 
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;;
 
 public class preis extends JFrame {
 
@@ -21,7 +27,6 @@ public class preis extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					System.out.println("lauch");
 					preis frame = new preis();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -48,12 +53,44 @@ public class preis extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setBounds(20, 77, 143, 20);
+		textField.setBounds(20, 78, 143, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblArtikelnamenEingeben = new JLabel("Artikel-ID eingeben:");
 		lblArtikelnamenEingeben.setBounds(20, 53, 130, 14);
 		contentPane.add(lblArtikelnamenEingeben);
+		
+		JButton btnNewButton = new JButton("Suchen");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				table(textField.getText());
+				
+			}
+		});
+		btnNewButton.setBounds(173, 76, 89, 23);
+		contentPane.add(btnNewButton);
+	}
+	
+	public void  table(String s){
+		if(s.length()!=0){
+		boolean a=true;
+		try{
+		Integer.parseInt(s);
+		}
+		catch(NumberFormatException e){
+			a=false;
+		}
+		if(a!=false)
+		{
+//			hier muss die datenbankabfrage ablaufen ;
+//  
+		}
+		else{
+			JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
+		}
+		}
+		
+		
 	}
 }
