@@ -13,13 +13,18 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class preis extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-
+	JLabel artname;
+	String user;
+	String password;
+	String url;
+	ArrayList<Artikel> artikel= new ArrayList<Artikel>();
 	/**
 	 * Launch the application.
 	 */
@@ -70,6 +75,14 @@ public class preis extends JFrame {
 		});
 		btnNewButton.setBounds(173, 76, 89, 23);
 		contentPane.add(btnNewButton);
+		
+		JLabel lblArtikel = new JLabel("Artikel:");
+		lblArtikel.setBounds(20, 122, 46, 14);
+		contentPane.add(lblArtikel);
+		
+		JLabel artname = new JLabel("New label");
+		artname.setBounds(76, 122, 268, 14);
+		contentPane.add(artname);
 	}
 	
 	public void  table(String s){
@@ -82,9 +95,37 @@ public class preis extends JFrame {
 			a=false;
 		}
 		if(a!=false)
-		{
-//			hier muss die datenbankabfrage ablaufen ;
-//  
+		{ Connection conn=null;
+			try {
+			String q= "";
+			conn= (Connection) DriverManager.getConnection(url, user, password);
+			Statement stmt= conn.createStatement();
+			ResultSet rs= stmt.executeQuery(q);
+			while (rs.next())
+			{ 
+				artname.setText(rs.getString(4));
+				Artikel art= new Artikel();
+				if(artikel.isEmpty()){
+				artikel.add(art);
+				}
+				else{
+					
+				}
+			}
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				if(conn!=null)
+				conn.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+
 		}
 		else{
 			JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
