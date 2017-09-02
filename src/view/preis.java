@@ -7,6 +7,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.commons.math3.stat.regression.SimpleRegression;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -21,9 +24,7 @@ public class preis extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	JLabel artname;
-	String user;
-	String password;
-	String url;
+	double [][] data;
 	ArrayList<Artikel> artikel= new ArrayList<Artikel>();
 	/**
 	 * Launch the application.
@@ -86,6 +87,7 @@ public class preis extends JFrame {
 	}
 	
 	public void  table(String s){
+		artikel.clear();
 		if(s.length()!=0){
 		boolean a=true;
 		try{
@@ -97,23 +99,44 @@ public class preis extends JFrame {
 		if(a!=false)
 		{ Connection conn=null;
 			try {
+			int i=0;
 			String q= "";
 			connection c=new connection();
 			conn= c.getconnection();
 			Statement stmt= conn.createStatement();
 			ResultSet rs= stmt.executeQuery(q);
 			while (rs.next())
-			{ 
-				artname.setText(rs.getString(4));
-				Artikel art= new Artikel();
+			{   if(i==0){
+				artname.setText(rs.getString(5));
+				i++;}
+				Artikel art= new Artikel(rs.getBigDecimal(9),rs.getInt(8));
 				if(artikel.isEmpty()){
 				artikel.add(art);
 				}
 				else{
+					for(int j=0; j<artikel.size();j++)
+					{
+						if(artikel.get(j).preis.compareTo(art.preis)==0)
+						{
+							artikel.get(j).menge+=art.menge;
+						}
+						else{
+							artikel.add(art);
+						}
+					}
 					
 				}
 			}
 			conn.close();
+			
+			data= new double [artikel.size()][2];
+				for(int k=0;k<artikel.size();k++)
+				{
+					data[k][0]=artikel.get(k).menge;
+					data[k][1]=artikel.get(k).preis.doubleValue();
+				}
+				this.regression(data);
+				
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,13 +148,18 @@ public class preis extends JFrame {
 				e1.printStackTrace();
 			}
 		}
-		
-
 		}
 		else{
 			JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
 		}
 		}
+	}
+	
+	public void regression(double [][]data){
+		SimpleRegression reg= new SimpleRegression();
+		reg.addData(data);
+		
+		
 		
 		
 	}
