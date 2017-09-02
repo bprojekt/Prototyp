@@ -98,7 +98,8 @@ public class preis extends JFrame {
 		{ Connection conn=null;
 			try {
 			String q= "";
-			conn= (Connection) DriverManager.getConnection(url, user, password);
+			connection c=new connection();
+			conn= c.getconnection();
 			Statement stmt= conn.createStatement();
 			ResultSet rs= stmt.executeQuery(q);
 			while (rs.next())
