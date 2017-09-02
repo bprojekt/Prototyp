@@ -132,8 +132,9 @@ public class preis extends JFrame {
 			data= new double [artikel.size()][2];
 				for(int k=0;k<artikel.size();k++)
 				{
-					data[k][0]=artikel.get(k).menge;
-					data[k][1]=artikel.get(k).preis.doubleValue();
+					data[k][0]=artikel.get(k).preis.doubleValue();
+					data[k][1]=artikel.get(k).menge;
+					
 				}
 				this.regression(data);
 				
