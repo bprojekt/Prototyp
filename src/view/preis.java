@@ -24,6 +24,7 @@ public class preis extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	JLabel artname;
+	JLabel paf;
 	double [][] data;
 	ArrayList<Artikel> artikel= new ArrayList<Artikel>();
 	/**
@@ -48,7 +49,7 @@ public class preis extends JFrame {
 	public preis() {
 		setTitle("Preisabsatzfunktion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 519, 385);
+		setBounds(100, 100, 519, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -84,6 +85,16 @@ public class preis extends JFrame {
 		JLabel artname = new JLabel("New label");
 		artname.setBounds(76, 122, 268, 14);
 		contentPane.add(artname);
+		artname.setVisible(false);
+		
+		JLabel lblNewLabel_1 = new JLabel("Preisabsatzfunktion:");
+		lblNewLabel_1.setBounds(20, 157, 130, 14);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel paf = new JLabel("New label");
+		paf.setBounds(173, 157, 108, 14);
+		contentPane.add(paf);
+		paf.setVisible(false);
 	}
 	
 	public void  table(String s){
@@ -108,6 +119,7 @@ public class preis extends JFrame {
 			while (rs.next())
 			{   if(i==0){
 				artname.setText(rs.getString(5));
+				artname.setVisible(true);
 				i++;}
 				Artikel art= new Artikel(rs.getBigDecimal(9),rs.getInt(8));
 				if(artikel.isEmpty()){
@@ -159,7 +171,9 @@ public class preis extends JFrame {
 	public void regression(double [][]data){
 		SimpleRegression reg= new SimpleRegression();
 		reg.addData(data);
-		
+		double abs= Math.round(reg.getIntercept()*100.0)/100.0;
+		double stg= Math.round(reg.getSlope()*100.0)/100.0;
+		paf.setText("q(p)= " + abs + " " +stg+ "*p" );
 		
 		
 		
