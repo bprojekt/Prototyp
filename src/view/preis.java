@@ -239,9 +239,28 @@ public class preis extends JFrame {
 		if(a!=false){
 			double abs= Math.round(reg.getIntercept()*100.0)/100.0;
 			double stg= Math.round(reg.getSlope()*100.0)/100.0;
-			double i= (m-abs)/stg;
+			double i= (m-abs)/stg; // i ändern um PAF
 			p = Math.round(i*100.0)/100.0;	
 		}
 		return p;
+	}
+	
+	public double getPreis(int p){
+		boolean a=true;
+		int m=0;
+		try{
+		}catch (NumberFormatException e)
+		{
+			a=false;
+			JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
+			
+		}
+		if(a!=false){
+			double abs= Math.round(reg.getIntercept()*100.0)/100.0;
+			double stg= Math.round(reg.getSlope()*100.0)/100.0;
+			 m = (int) (p*stg+abs);// i ändern um PAF
+			//p = Math.round(i*100.0)/100.0;	
+		}
+		return m;
 	}
 }
