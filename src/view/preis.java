@@ -21,7 +21,6 @@ import java.awt.event.ActionEvent;
 import java.sql.*;
 import java.util.ArrayList;
 import java.awt.Font;
-import javax.swing.JTabbedPane;
 
 public class preis extends JFrame {
 
@@ -31,11 +30,13 @@ public class preis extends JFrame {
 	JLabel paf;
 	double [][] data;
 	JLabel prize ;
+	JLabel menge;
 	ArrayList<Artikel> artikel= new ArrayList<Artikel>();
 	SimpleRegression reg= new SimpleRegression();
 	 static int [] p = new int [16];
 	    static int [] m = new int [16];
 	private JTextField textField_1;
+	private JTextField textField_2;
 	/**
 	 * Launch the application.
 	 */
@@ -145,6 +146,7 @@ public class preis extends JFrame {
 		btnNewButton_1.setBounds(678, 78, 89, 23);
 		contentPane.add(btnNewButton_1);
 		
+
 		JButton btnVisuelleDarstellung = new JButton("Visuelle Darstellung");
 		btnVisuelleDarstellung.setBounds(123, 283, 151, 23);
 		btnVisuelleDarstellung.addActionListener(new ActionListener() {
@@ -173,6 +175,40 @@ public class preis extends JFrame {
 		});
 		
 		contentPane.add(btnVisuelleDarstellung);
+		JLabel lblAbsatzmengeBestimmen = new JLabel("Absatzmenge bestimmen:");
+		lblAbsatzmengeBestimmen.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAbsatzmengeBestimmen.setBounds(450, 182, 201, 14);
+		contentPane.add(lblAbsatzmengeBestimmen);
+		
+		JLabel lblPreisEingeben = new JLabel("Preis eingeben:");
+		lblPreisEingeben.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblPreisEingeben.setBounds(450, 236, 99, 14);
+		contentPane.add(lblPreisEingeben);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(556, 234, 112, 20);
+		contentPane.add(textField_2);
+		
+		JButton button = new JButton("Ermitteln");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(textField_2.getText().length()!=0)
+			 menge.setText(""+getMenge(textField_2.getText())+"");
+			}
+		});
+		button.setBounds(678, 233, 89, 23);
+		contentPane.add(button);
+		
+		JLabel lblMenge = new JLabel("Menge:");
+		lblMenge.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblMenge.setBounds(450, 265, 94, 14);
+		contentPane.add(lblMenge);
+		
+		menge = new JLabel("0");
+		menge.setBounds(556, 265, 46, 14);
+		contentPane.add(menge);
+		
 		
 	}
 	
@@ -277,22 +313,29 @@ public class preis extends JFrame {
 		}
 		return p;
 	}
-	
-	public double getPr(int p){
+
+	public double getMenge(String s){
 		boolean a=true;
 		int m=0;
+		double p=0.00;
 		try{
+			p= Double.parseDouble(s);
 		}catch (NumberFormatException e)
 		{
 			a=false;
-			JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Bitte geben sie nur Preise mit ('.') ein!","Fehler",JOptionPane.ERROR_MESSAGE);
 			
 		}
 		if(a!=false){
+			s=s.substring(s.indexOf(".")+1);
+			if(s.length()>2)
+				JOptionPane.showMessageDialog(null,"Bitte geben sie nur Zahlen mit zwei Nachkommastellen ein!","Fehler",JOptionPane.ERROR_MESSAGE);
+			else{	
 			double abs= Math.round(reg.getIntercept()*100.0)/100.0;
 			double stg= Math.round(reg.getSlope()*100.0)/100.0;
 			 m = (int) (p*stg+abs);// i ändern um PAF
 			//p = Math.round(i*100.0)/100.0;	
+			}
 		}
 		return m;
 	}
