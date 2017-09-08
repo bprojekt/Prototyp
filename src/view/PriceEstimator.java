@@ -82,7 +82,7 @@ public class PriceEstimator extends ApplicationFrame {
 		// fitted to the inputData using ordinary least squares regression.
 		// a - regressionParameters[0], b - regressionParameters[1]
 		double regressionParameters[] = Regression.getOLSRegression(inputData,
-				0); // HI peter
+				0); // 
  
 		// Prepare a line function using the found parameters
 		LineFunction2D linefunction2d = new LineFunction2D(
