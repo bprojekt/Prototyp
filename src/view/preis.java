@@ -9,12 +9,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
+import org.jfree.ui.RefineryUtilities;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ public class preis extends JFrame {
 	JLabel menge;
 	ArrayList<Artikel> artikel= new ArrayList<Artikel>();
 	SimpleRegression reg= new SimpleRegression();
+	 static int [] p = new int [16];
+	    static int [] m = new int [16];
 	private JTextField textField_1;
 	private JTextField textField_2;
 	/**
@@ -53,7 +57,8 @@ public class preis extends JFrame {
 	 * Create the frame.
 	 */
 	public preis() {
-		setTitle("Preisabsatzfunktion");
+		//s
+		setTitle("Preisabsatzfunktion + BA PROjekt");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
@@ -102,6 +107,7 @@ public class preis extends JFrame {
 		lblNewLabel_1.setBounds(20, 193, 130, 14);
 		contentPane.add(lblNewLabel_1);
 		
+
 		paf = new JLabel("New label");
 		paf.setBounds(161, 194, 191, 14);
 		contentPane.add(paf);
@@ -141,6 +147,35 @@ public class preis extends JFrame {
 		btnNewButton_1.setBounds(678, 78, 89, 23);
 		contentPane.add(btnNewButton_1);
 		
+
+		JButton btnVisuelleDarstellung = new JButton("Visuelle Darstellung");
+		btnVisuelleDarstellung.setBounds(123, 283, 151, 23);
+		btnVisuelleDarstellung.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			 	
+			  
+				for(int i =0; i<p.length ; i++){
+					
+					p[i]= 5*i;
+					m[i]=12*2*i;
+				}
+				PriceEstimator demo;
+				try {
+					demo = new PriceEstimator(p,m);
+					demo.pack();
+					RefineryUtilities.centerFrameOnScreen(demo);
+
+					demo.setVisible(true);
+					demo.drawRegressionLine();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		
+		contentPane.add(btnVisuelleDarstellung);
 		JLabel lblAbsatzmengeBestimmen = new JLabel("Absatzmenge bestimmen:");
 		lblAbsatzmengeBestimmen.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblAbsatzmengeBestimmen.setBounds(450, 182, 201, 14);
@@ -179,6 +214,7 @@ public class preis extends JFrame {
 	}
 	
 	public void  table(String s){
+		//hallo
 		artikel.clear();
 		if(s.length()!=0){
 		boolean a=true;
@@ -283,7 +319,7 @@ public class preis extends JFrame {
 		}
 		return p;
 	}
-	
+
 	public double getMenge(String s){
 		boolean a=true;
 		int m=0;
