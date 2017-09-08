@@ -102,7 +102,7 @@ public class preis extends JFrame {
 		lblNewLabel_1.setBounds(20, 193, 130, 14);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel paf = new JLabel("New label");
+		paf = new JLabel("New label");
 		paf.setBounds(161, 194, 191, 14);
 		contentPane.add(paf);
 		paf.setVisible(false);
@@ -182,8 +182,9 @@ public class preis extends JFrame {
 		artikel.clear();
 		if(s.length()!=0){
 		boolean a=true;
+		int id=0;
 		try{
-		Integer.parseInt(s);
+		 id=Integer.parseInt(s);
 		}
 		catch(NumberFormatException e){
 			a=false;
@@ -192,31 +193,33 @@ public class preis extends JFrame {
 		{ Connection conn=null;
 			try {
 			int i=0;
-			String q= "";
+			String q= "SELECT * FROM BON where produktid='"+id+"' ";
 			connection c=new connection();
 			conn= c.getconnection();
 			Statement stmt= conn.createStatement();
 			ResultSet rs= stmt.executeQuery(q);
 			while (rs.next())
-			{   if(i==0){
-				artname.setText(rs.getString(5));
-				artname.setVisible(true);
-				i++;}
-				Artikel art= new Artikel(rs.getBigDecimal(9),rs.getInt(8));
+			{   //if(i==0){
+				//artname.setText(rs.getString(5));
+				//artname.setVisible(true);
+				//i++;}
+				Artikel art= new Artikel(rs.getDouble("preis"),rs.getInt("menge"));
 				if(artikel.isEmpty()){
 				artikel.add(art);
 				}
 				else{
+					boolean da=false;
 					for(int j=0; j<artikel.size();j++)
 					{
-						if(artikel.get(j).preis.compareTo(art.preis)==0)
-						{
+						if(artikel.get(j).preis==art.preis)
+						{ 
 							artikel.get(j).menge+=art.menge;
-						}
-						else{
-							artikel.add(art);
+							da=true;
+							break;
 						}
 					}
+					if(da==false)
+					artikel.add(art);
 					
 				}
 			}
@@ -225,7 +228,7 @@ public class preis extends JFrame {
 			data= new double [artikel.size()][2];
 				for(int k=0;k<artikel.size();k++)
 				{
-					data[k][0]=artikel.get(k).preis.doubleValue();
+					data[k][0]=artikel.get(k).preis;
 					data[k][1]=artikel.get(k).menge;
 					
 				}
@@ -254,6 +257,7 @@ public class preis extends JFrame {
 		reg.addData(data);
 		double abs= Math.round(reg.getIntercept()*100.0)/100.0;
 		double stg= Math.round(reg.getSlope()*100.0)/100.0;
+		System.out.println("q(p)= " + abs + " " +stg+ "*p");
 		paf.setText("q(p)= " + abs + " " +stg+ "*p" ); 
 		paf.setVisible(true);
 		

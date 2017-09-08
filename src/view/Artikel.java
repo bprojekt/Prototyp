@@ -3,13 +3,13 @@ package view;
 import java.math.BigDecimal;
 
 public class Artikel {
-	BigDecimal preis;
+	double preis;
 	int menge;
 	Artikel()
 	{
 		
 	}
-Artikel(BigDecimal preis, int menge){
+Artikel(double preis, int menge){
 	this.preis=preis;
 	this.menge=menge;
 }

@@ -1,9 +1,10 @@
 package view;
+import com.sap.db.jdbc.Driver;
 import java.sql.*;
 public class connection {
-String url;
-String user;
-String password;
+String url="jdbc:sap://132.252.53.6:39015/?autocommit=false";
+String user="BPSS1703";
+String password="Han56%1!";
 Connection conn;
 public Connection getconnection()
 {
