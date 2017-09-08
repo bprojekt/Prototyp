@@ -9,12 +9,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
+import org.jfree.ui.RefineryUtilities;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ public class preis extends JFrame {
 	JLabel prize ;
 	ArrayList<Artikel> artikel= new ArrayList<Artikel>();
 	SimpleRegression reg= new SimpleRegression();
+	 static int [] p = new int [16];
+	    static int [] m = new int [16];
 	private JTextField textField_1;
 	/**
 	 * Launch the application.
@@ -102,7 +106,7 @@ public class preis extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel paf = new JLabel("New label");
-		paf.setBounds(161, 194, 191, 14);
+		paf.setBounds(161, 194, 232, 14);
 		contentPane.add(paf);
 		paf.setVisible(false);
 		
@@ -140,6 +144,34 @@ public class preis extends JFrame {
 		btnNewButton_1.setBounds(678, 78, 89, 23);
 		contentPane.add(btnNewButton_1);
 		
+		JButton btnVisuelleDarstellung = new JButton("Visuelle Darstellung");
+		btnVisuelleDarstellung.setBounds(123, 283, 151, 23);
+		btnVisuelleDarstellung.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			 	
+			  
+				for(int i =0; i<p.length ; i++){
+					
+					p[i]= 5*i;
+					m[i]=12*2*i;
+				}
+				PriceEstimator demo;
+				try {
+					demo = new PriceEstimator(p,m);
+					demo.pack();
+					RefineryUtilities.centerFrameOnScreen(demo);
+
+					demo.setVisible(true);
+					demo.drawRegressionLine();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		
+		contentPane.add(btnVisuelleDarstellung);
 		
 	}
 	
@@ -245,7 +277,7 @@ public class preis extends JFrame {
 		return p;
 	}
 	
-	public double getPreis(int p){
+	public double getPr(int p){
 		boolean a=true;
 		int m=0;
 		try{

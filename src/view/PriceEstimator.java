@@ -27,27 +27,13 @@ public class PriceEstimator extends ApplicationFrame {
  
 	XYDataset inputData;
 	JFreeChart chart;
-   static int [] p = new int [16];
-    static int [] m = new int [16];
-	public static void main(String[] args) throws IOException {
-		
-		for(int i =0; i<p.length ; i++){
-			
-			p[i]= 5*i;
-			m[i]=12*2*i;
-		}
-		PriceEstimator demo = new PriceEstimator();
-		demo.pack();
-		RefineryUtilities.centerFrameOnScreen(demo);
+  
 
-		demo.setVisible(true);
-		demo.drawRegressionLine();
-
-	}
- 
-	public PriceEstimator() throws IOException {
+	public PriceEstimator(int preis [], int menge[]) throws IOException {
 		super("Technobium - Linear Regression");
  
+		int[] p = preis;
+		int[] m = menge;
 		// Read sample data from prices.txt file
 		inputData = createDatasetFromFile(p,m);
  
@@ -91,7 +77,7 @@ public class PriceEstimator extends ApplicationFrame {
 	}
 
 
-	private void drawRegressionLine() {
+	public void drawRegressionLine() {
 		// Get the parameters 'a' and 'b' for an equation y = a + b * x,
 		// fitted to the inputData using ordinary least squares regression.
 		// a - regressionParameters[0], b - regressionParameters[1]
@@ -111,7 +97,7 @@ public class PriceEstimator extends ApplicationFrame {
 		xyplot.setDataset(1, dataset);
 		XYLineAndShapeRenderer xylineandshaperenderer = new XYLineAndShapeRenderer(
 				true, false);
-		xylineandshaperenderer.setSeriesPaint(0, Color.YELLOW);
+		xylineandshaperenderer.setSeriesPaint(0, Color.BLACK);
 		xyplot.setRenderer(1, xylineandshaperenderer);
 	}
 }
