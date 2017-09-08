@@ -213,6 +213,7 @@ public class preis extends JFrame {
 	}
 	
 	public void  table(String s){
+		//hallo
 		artikel.clear();
 		if(s.length()!=0){
 		boolean a=true;

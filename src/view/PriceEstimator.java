@@ -34,7 +34,7 @@ public class PriceEstimator extends ApplicationFrame {
  
 		int[] p = preis;
 		int[] m = menge;
-		// Read sample data from prices.txt file
+		// Read sample data from prices.txt file and 
 		inputData = createDatasetFromFile(p,m);
  
 		// Create the chart using the sample data
