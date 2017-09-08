@@ -56,6 +56,7 @@ public class preis extends JFrame {
 	 * Create the frame.
 	 */
 	public preis() {
+		// Hallo
 		setTitle("Preisabsatzfunktion + BA PROjekt");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
