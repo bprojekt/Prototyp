@@ -10,11 +10,11 @@ String user="BPSS1703";
 String password="Han56%1!";
 Connection conn;
 //String driverName = "jdbc:sap://132.252.53.6:39015";
-public Connection getconnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException
+public Connection getconnection()
 {
 	try {
         
-		Class.forName("com.sap.db.jdbc.Driver").newInstance();
+		//Class.forName("com.sap.db.jdbc.Driver").newInstance();
 	    conn = (Connection)DriverManager.getConnection(url,user,password);
 	    try {
 			Statement s= conn.createStatement();
@@ -40,10 +40,11 @@ public Connection getconnection() throws InstantiationException, IllegalAccessEx
            
             CallableStatement s1 = (CallableStatement) conn.prepareCall("CALL _SYS_AFL.PAL_POLYNOMIAL_REGRESSION(PAL_PR_DATA_TBL, '#PAL_PARAMETER_TBL', ?, ?, ?, ?,?)");
             boolean cst =s1.execute();
+            int index =0;
             while (cst) {
-            	
+            	index++;
                 ResultSet rs = s1.getResultSet();
-    			this.bearbeiteRes(rs);
+    			this.bearbeiteRes(rs,index);
 
                 // process result set
 
@@ -80,10 +81,12 @@ public Connection getconnection() throws InstantiationException, IllegalAccessEx
 
 	return conn;
 }
-	public void bearbeiteRes(ResultSet r1) throws SQLException{
+	public void bearbeiteRes(ResultSet r1, int ind) throws SQLException{
 		int anzahl = 0;
 		while(r1.next()){
-			
+	      if (ind ==1){
+	    	  
+	      }		
 			anzahl ++;
 //			System.out.println(r1.getDouble("COEFFICIENT_VALUE"));
 //			System.out.println(r1.getString("VARIABLE_NAME"));

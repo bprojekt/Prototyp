@@ -220,7 +220,7 @@ public class preis extends JFrame {
 		
 	}
 	
-	public void  table(String s) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	public void  table(String s) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		//hallo
 		artikel.clear();
 		if(s.length()!=0){
@@ -238,7 +238,7 @@ public class preis extends JFrame {
 			int i=0;
 			String q= "SELECT * FROM EDEKA1.BONS where ARTIKELBEZEICHNUNG ='MILKA'";
 			connection c=new connection();
-			conn= c.getconnection();
+			//conn= c.getconnection();
 			Statement stmt= conn.createStatement();
 			ResultSet rs= stmt.executeQuery(q);
 			while (rs.next())
