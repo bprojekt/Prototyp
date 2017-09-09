@@ -41,11 +41,13 @@ public class preis extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		connection conn = new connection();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					preis frame = new preis();
-					frame.setVisible(true);
+				   conn.getconnection();
+//					preis frame = new preis();
+//					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -84,7 +86,12 @@ public class preis extends JFrame {
 		JButton btnNewButton = new JButton("Suchen");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				table(textField.getText());
+				try {
+					table(textField.getText());
+				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
 		});
@@ -213,7 +220,7 @@ public class preis extends JFrame {
 		
 	}
 	
-	public void  table(String s){
+	public void  table(String s) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		//hallo
 		artikel.clear();
 		if(s.length()!=0){
@@ -229,7 +236,7 @@ public class preis extends JFrame {
 		{ Connection conn=null;
 			try {
 			int i=0;
-			String q= "SELECT * FROM BON where produktid='"+id+"' ";
+			String q= "SELECT * FROM EDEKA1.BONS where ARTIKELBEZEICHNUNG ='MILKA'";
 			connection c=new connection();
 			conn= c.getconnection();
 			Statement stmt= conn.createStatement();
