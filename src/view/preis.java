@@ -46,6 +46,13 @@ public class preis extends JFrame {
 			public void run() {
 				try {
 				   conn.getconnection();
+				   for(int i=0 ; i<conn.c1.size();i++){
+					   System.out.println("CID: " + conn.c1.get(i).coefID + " " + "CN :" + conn.c1.get(i).coefname +"\n");
+				   }
+				   for(int j=0 ; j< conn.s1.size();j++){
+					   System.out.println("STN: " + conn.s1.get(j).StatN + " "+ "StV: " + conn.s1.get(j).StatV +"\n");
+
+				   }
 //					preis frame = new preis();
 //					frame.setVisible(true);
 				} catch (Exception e) {

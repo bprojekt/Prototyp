@@ -10,6 +10,8 @@ String user="BPSS1703";
 String password="Han56%1!";
 Connection conn;
 //String driverName = "jdbc:sap://132.252.53.6:39015";
+ArrayList<Coefficient> c1 = new ArrayList<Coefficient>();
+ArrayList<Statics> s1 = new ArrayList<Statics>();
 
 public Connection getconnection() 
 {
@@ -86,8 +88,25 @@ public Connection getconnection()
 		int anzahl = 0;
 		while(r1.next()){
 	      if (ind ==1){
-	    	  
-	      }		
+	    	  Coefficient co1 = new Coefficient();
+	    	  co1.coefID = r1.getDouble("COEFFICIENT_VALUE");
+	    	  co1.coefname = r1.getString("VARIABLE_NAME");
+	    	  c1.add(co1);
+				anzahl ++;
+
+	      }
+	      
+	      else if(ind ==4){
+	    	    Statics st1  =new Statics();
+	    	    st1.StatN = r1.getString("STAT_NAME");
+	    	    st1.StatV = r1.getDouble("STAT_VALUE");
+	    	    
+
+ 	    	    s1.add(st1);
+				anzahl ++;
+
+	      }
+	      else
 			anzahl ++;
 //			System.out.println(r1.getDouble("COEFFICIENT_VALUE"));
 //			System.out.println(r1.getString("VARIABLE_NAME"));
