@@ -228,23 +228,13 @@ public class preis extends JFrame {
 		}
 		if(a!=false)
 		{ Connection conn=null;
-			try {
 			int i=0;
 
 			String q= "SELECT * FROM EDEKA1.BONS where Artikelbezeichnung='MILKA' ";
 			connection c=new connection();
 			try {
 				conn= c.getconnection();
-			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
 			Statement stmt= conn.createStatement();
 			ResultSet rs= stmt.executeQuery(q);
 			while (rs.next())
@@ -294,12 +284,13 @@ public class preis extends JFrame {
 				e1.printStackTrace();
 			}
 		}
-		}
+			}
 		else{
 			JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
 		}
 		}
-	}
+	
+}
 	
 	public void regression(double [][]data){
 		

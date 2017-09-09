@@ -10,11 +10,10 @@ String user="BPSS1703";
 String password="Han56%1!";
 Connection conn;
 //String driverName = "jdbc:sap://132.252.53.6:39015";
-public Connection getconnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException
+public Connection getconnection() 
 {
 	try {
         
-		Class.forName("com.sap.db.jdbc.Driver").newInstance();
 	    conn = (Connection)DriverManager.getConnection(url,user,password);
 	    try {
 			Statement s= conn.createStatement();
