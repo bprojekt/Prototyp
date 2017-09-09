@@ -58,7 +58,7 @@ public class preis extends JFrame {
 	 */
 	public preis() {
 		//s
-		setTitle("Preisabsatzfunktion + BA PROjekt");
+		setTitle("Preisabsatzfunktion + Bachelorprojekt");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
@@ -214,7 +214,6 @@ public class preis extends JFrame {
 	}
 	
 	public void  table(String s){
-		//hallo
 		artikel.clear();
 		if(s.length()!=0){
 		boolean a=true;
@@ -229,7 +228,7 @@ public class preis extends JFrame {
 		{ Connection conn=null;
 			try {
 			int i=0;
-			String q= "SELECT * FROM BON where produktid='"+id+"' ";
+			String q= "SELECT * FROM EDEKA1.BONS where Artikelbezeichnung='MILKA' ";
 			connection c=new connection();
 			conn= c.getconnection();
 			Statement stmt= conn.createStatement();
