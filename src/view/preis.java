@@ -60,7 +60,7 @@ public class preis extends JFrame {
 	 */
 	public preis() {
 		//s
-		setTitle("Preisabsatzfunktion + BA PROjekt");
+		setTitle("Preisabsatzfunktion + Bachelorprojekt");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
@@ -86,13 +86,7 @@ public class preis extends JFrame {
 		JButton btnNewButton = new JButton("Suchen");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
 					table(textField.getText());
-				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
 			}
 		});
 		btnNewButton.setBounds(173, 78, 89, 23);
@@ -220,8 +214,9 @@ public class preis extends JFrame {
 		
 	}
 	
-	public void  table(String s) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		//hallo
+
+
+	public void  table(String s){
 		artikel.clear();
 		if(s.length()!=0){
 		boolean a=true;
@@ -234,11 +229,15 @@ public class preis extends JFrame {
 		}
 		if(a!=false)
 		{ Connection conn=null;
-			try {
 			int i=0;
-			String q= "SELECT * FROM EDEKA1.BONS where ARTIKELBEZEICHNUNG ='MILKA'";
+
+			String q= "SELECT * FROM EDEKA1.BONS where Artikelbezeichnung='MILKA' ";
 			connection c=new connection();
-			//conn= c.getconnection();
+
+			try {
+				conn= c.getconnection();
+		
+
 			Statement stmt= conn.createStatement();
 			ResultSet rs= stmt.executeQuery(q);
 			while (rs.next())
@@ -288,12 +287,13 @@ public class preis extends JFrame {
 				e1.printStackTrace();
 			}
 		}
-		}
+			}
 		else{
 			JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
 		}
 		}
-	}
+	
+}
 	
 	public void regression(double [][]data){
 		
