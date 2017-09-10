@@ -28,6 +28,7 @@ public class preis extends JFrame {
 	private JTextField textField;
 	JLabel artname;
 	JLabel paf;
+	JLabel r2;
 	double [][] data;
 	JLabel prize ;
 	JLabel menge;
@@ -109,6 +110,7 @@ public class preis extends JFrame {
 		
 
 		paf = new JLabel("New label");
+		paf.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		paf.setBounds(20, 237, 405, 14);
 		contentPane.add(paf);
 		paf.setVisible(false);
@@ -149,7 +151,7 @@ public class preis extends JFrame {
 		
 
 		JButton btnVisuelleDarstellung = new JButton("Visuelle Darstellung");
-		btnVisuelleDarstellung.setBounds(123, 283, 151, 23);
+		btnVisuelleDarstellung.setBounds(121, 331, 151, 23);
 		btnVisuelleDarstellung.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			 	
@@ -209,6 +211,16 @@ public class preis extends JFrame {
 		menge = new JLabel("0");
 		menge.setBounds(556, 265, 46, 14);
 		contentPane.add(menge);
+		
+		JLabel lblR = new JLabel("R\u00B2:");
+		lblR.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblR.setBounds(20, 284, 46, 14);
+		contentPane.add(lblR);
+		
+		r2= new JLabel("New label");
+		r2.setBounds(76, 285, 118, 14);
+		contentPane.add(r2);
+		r2.setVisible(false);
 		
 		
 	}
@@ -277,7 +289,7 @@ public class preis extends JFrame {
 //					data[k][1]=artikel.get(k).menge;
 //					
 //				}
-				this.regression(c.c1);
+				this.regression(c.c1,c.s1);
 			
 }
 		else{
@@ -287,7 +299,7 @@ public class preis extends JFrame {
 	
 }
 	
-	public void regression(ArrayList<Coefficient> cof){
+	public void regression(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 		
 //		reg.addData(data);
 		double abs= Math.round(cof.get(0).coefID*100.0)/100.0;
@@ -317,6 +329,10 @@ public class preis extends JFrame {
 		paf.setText("q(p)= " + abs + " " +stg1+ "*p "+ stg2+ "*p² " + stg3+ "*p³"); 
 		}
 		paf.setVisible(true);
+		
+		double best=Math.round(stat.get(0).StatV*100000.0)/100000.0;
+		r2.setText(" "+best+" ");
+		r2.setVisible(true);
 		
 	}
 	
