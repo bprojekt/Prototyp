@@ -41,20 +41,12 @@ public class preis extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		connection conn = new connection();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-				   conn.getconnection();
-				   for(int i=0 ; i<conn.c1.size();i++){
-					   System.out.println("CID: " + conn.c1.get(i).coefID + " " + "CN :" + conn.c1.get(i).coefname +"\n");
-				   }
-				   for(int j=0 ; j< conn.s1.size();j++){
-					   System.out.println("STN: " + conn.s1.get(j).StatN + " "+ "StV: " + conn.s1.get(j).StatV +"\n");
-
-				   }
-//					preis frame = new preis();
-//					frame.setVisible(true);
+					 
+				   	preis frame = new preis();
+				   	frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -81,13 +73,13 @@ public class preis extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setBounds(20, 79, 143, 20);
+		textField.setBounds(20, 79, 195, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblArtikelnamenEingeben = new JLabel("Artikel-ID eingeben:");
+		JLabel lblArtikelnamenEingeben = new JLabel("EAN-Nummer eingeben:");
 		lblArtikelnamenEingeben.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblArtikelnamenEingeben.setBounds(20, 53, 130, 14);
+		lblArtikelnamenEingeben.setBounds(20, 53, 151, 14);
 		contentPane.add(lblArtikelnamenEingeben);
 		
 		JButton btnNewButton = new JButton("Suchen");
@@ -96,7 +88,7 @@ public class preis extends JFrame {
 					table(textField.getText());
 			}
 		});
-		btnNewButton.setBounds(173, 78, 89, 23);
+		btnNewButton.setBounds(225, 78, 89, 23);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblArtikel = new JLabel("Artikel:");
@@ -104,7 +96,7 @@ public class preis extends JFrame {
 		lblArtikel.setBounds(20, 132, 46, 14);
 		contentPane.add(lblArtikel);
 		
-		JLabel artname = new JLabel("New label");
+		artname = new JLabel("New label");
 		artname.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		artname.setBounds(76, 132, 285, 14);
 		contentPane.add(artname);
@@ -117,7 +109,7 @@ public class preis extends JFrame {
 		
 
 		paf = new JLabel("New label");
-		paf.setBounds(161, 194, 191, 14);
+		paf.setBounds(20, 237, 405, 14);
 		contentPane.add(paf);
 		paf.setVisible(false);
 		
@@ -227,74 +219,67 @@ public class preis extends JFrame {
 		artikel.clear();
 		if(s.length()!=0){
 		boolean a=true;
-		int id=0;
+		long id=0;
 		try{
-		 id=Integer.parseInt(s);
+		 id=Long.parseLong(s);
 		}
 		catch(NumberFormatException e){
 			a=false;
 		}
 		if(a!=false)
-		{ Connection conn=null;
-			int i=0;
-
-			String q= "SELECT * FROM EDEKA1.BONS where Artikelbezeichnung='MILKA' ";
+		{ 
+//			int i=0;
 			connection c=new connection();
 
-			try {
-				conn= c.getconnection();
-		
+				  c.getconnection(id);
+				   for(int m=0 ; m<c.c1.size();m++){
+					   System.out.println("CID: " + c.c1.get(m).coefID + " " + "CN :" + c.c1.get(m).coefname +"\n");
+				   }
+				   for(int n=0 ; n< c.s1.size();n++){
+					   System.out.println("STN: " + c.s1.get(n).StatN + " "+ "StV: " + c.s1.get(n).StatV +"\n");
 
-			Statement stmt= conn.createStatement();
-			ResultSet rs= stmt.executeQuery(q);
-			while (rs.next())
-			{   //if(i==0){
-				//artname.setText(rs.getString(5));
-				//artname.setVisible(true);
-				//i++;}
-				Artikel art= new Artikel(rs.getDouble("preis"),rs.getInt("menge"));
-				if(artikel.isEmpty()){
-				artikel.add(art);
-				}
-				else{
-					boolean da=false;
-					for(int j=0; j<artikel.size();j++)
-					{
-						if(artikel.get(j).preis==art.preis)
-						{ 
-							artikel.get(j).menge+=art.menge;
-							da=true;
-							break;
-						}
-					}
-					if(da==false)
-					artikel.add(art);
-					
-				}
-			}
-			conn.close();
+				   }
+				   artname.setText(c.aname);
+				   artname.setVisible(true);
+
 			
-			data= new double [artikel.size()][2];
-				for(int k=0;k<artikel.size();k++)
-				{
-					data[k][0]=artikel.get(k).preis;
-					data[k][1]=artikel.get(k).menge;
-					
-				}
-				this.regression(data);
-				
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			try {
-				if(conn!=null)
-				conn.close();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-			}
+//			while (rs.next())
+//			{   //if(i==0){
+//				//artname.setText(rs.getString(5));
+//				//artname.setVisible(true);
+//				//i++;}
+//				Artikel art= new Artikel(rs.getDouble("preis"),rs.getInt("menge"));
+//				if(artikel.isEmpty()){
+//				artikel.add(art);
+//				}
+//				else{
+//					boolean da=false;
+//					for(int j=0; j<artikel.size();j++)
+//					{
+//						if(artikel.get(j).preis==art.preis)
+//						{ 
+//							artikel.get(j).menge+=art.menge;
+//							da=true;
+//							break;
+//						}
+//					}
+//					if(da==false)
+//					artikel.add(art);
+//					
+//				}
+//			}
+//			conn.close();
+//			
+//			data= new double [artikel.size()][2];
+//				for(int k=0;k<artikel.size();k++)
+//				{
+//					data[k][0]=artikel.get(k).preis;
+//					data[k][1]=artikel.get(k).menge;
+//					
+//				}
+				this.regression(c.c1);
+			
+}
 		else{
 			JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
 		}
@@ -302,13 +287,35 @@ public class preis extends JFrame {
 	
 }
 	
-	public void regression(double [][]data){
+	public void regression(ArrayList<Coefficient> cof){
 		
-		reg.addData(data);
-		double abs= Math.round(reg.getIntercept()*100.0)/100.0;
-		double stg= Math.round(reg.getSlope()*100.0)/100.0;
-		System.out.println("q(p)= " + abs + " " +stg+ "*p");
-		paf.setText("q(p)= " + abs + " " +stg+ "*p" ); 
+//		reg.addData(data);
+		double abs= Math.round(cof.get(0).coefID*100.0)/100.0;
+		double stg1= Math.round(cof.get(1).coefID*100.0)/100.0;
+		double stg2= Math.round(cof.get(2).coefID*100.0)/100.0;
+		double stg3= Math.round(cof.get(3).coefID*100.0)/100.0;
+		System.out.println(+abs+" "+stg1+ " " +stg2+" "+stg3);
+		if(stg1>=0||stg2>=0||stg3>=0)
+		{
+			if(stg1>=0&&stg2<0&&stg3<0)
+				paf.setText("q(p)= " + abs + " + " +stg1+ "*p "+ stg2+ "*p² " + stg3+ "*p³"); 	
+			if(stg1<0&&stg2>=0&&stg3<0)
+				paf.setText("q(p)= " + abs + " " +stg1+ "*p+ "+ stg2+ "*p² " + stg3+ "*p³"); 
+			if(stg1<0&&stg2<0&&stg3>=0)
+				paf.setText("q(p)= " + abs + " " +stg1+ "*p "+ stg2+ "*p²+ " + stg3+ "*p³"); 
+			if(stg1>=0&&stg2>=0&&stg3<0)
+				paf.setText("q(p)= " + abs + " + " +stg1+ "*p+ "+ stg2+ "*p² " + stg3+ "*p³"); 
+			if(stg1>=0&&stg2<0&&stg3>=0)	
+				paf.setText("q(p)= " + abs + " + " +stg1+ "*p "+ stg2+ "*p²+ " + stg3+ "*p³"); 
+			if(stg1<0&&stg2>=0&&stg3>=0)
+				paf.setText("q(p)= " + abs + " " +stg1+ "*p+ "+ stg2+ "*p²+ " + stg3+ "*p³"); 
+			if(stg1>=0&&stg2>=0&&stg3>=0)
+				paf.setText("q(p)= " + abs + " + " +stg1+ "*p+ "+ stg2+ "*p²+ " + stg3+ "*p³+"); 
+		
+		}
+		else{
+		paf.setText("q(p)= " + abs + " " +stg1+ "*p "+ stg2+ "*p² " + stg3+ "*p³"); 
+		}
 		paf.setVisible(true);
 		
 	}
