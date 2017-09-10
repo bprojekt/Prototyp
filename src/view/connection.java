@@ -17,8 +17,7 @@ public Connection getconnection()
 {
 	try {
         
-	
-	    conn = (Connection)DriverManager.getConnection(url,user,password);
+	       conn = (Connection)DriverManager.getConnection(url,user,password);
 	    try {
 			Statement s= conn.createStatement();
 			
