@@ -201,8 +201,8 @@ public class preis extends JFrame {
 		JButton button = new JButton("Ermitteln");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				if(textField_2.getText().length()!=0)
-//			 menge.setText(""+getMenge(textField_2.getText())+"");
+				if(textField_2.getText().length()!=0)
+			 menge.setText(""+getMenge(textField_2.getText())+"");
 			}
 		});
 		button.setBounds(678, 233, 89, 23);
@@ -215,7 +215,7 @@ public class preis extends JFrame {
 		
 		menge = new JLabel("0");
 		menge.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		menge.setBounds(556, 265, 46, 14);
+		menge.setBounds(556, 265, 112, 14);
 		contentPane.add(menge);
 		
 		JLabel lblR = new JLabel("R\u00B2:");
@@ -373,35 +373,34 @@ public class preis extends JFrame {
 //		return p;
 //	}
 //
-//	public double getMenge(String s){
-//		boolean a=true;
-//		int m=0;
-//		double p=0.00;
-//		try{
-//			p= Double.parseDouble(s);
-//		}catch (NumberFormatException e)
-//		{
-//			a=false;
-//			JOptionPane.showMessageDialog(null,"Bitte geben sie nur Preise mit ('.') ein!","Fehler",JOptionPane.ERROR_MESSAGE);
-//			
-//		}
-//		if(a!=false){
-//			s=s.substring(s.indexOf(".")+1);
-//			if(s.length()>2)
-//				JOptionPane.showMessageDialog(null,"Bitte geben sie nur Zahlen mit zwei Nachkommastellen ein!","Fehler",JOptionPane.ERROR_MESSAGE);
-//			else{	
-//			double abs= Math.round(reg.getIntercept()*100.0)/100.0;
-//			double stg= Math.round(reg.getSlope()*100.0)/100.0;
-//			 m = (int) (p*stg+abs);// i ändern um PAF
-//			//p = Math.round(i*100.0)/100.0;	
-//			}
-//		}
-//		return m;
-//	}
+	public int getMenge(String s){
+		boolean a=true;
+		int m=0;
+		double p=0.00;
+		try{
+			p= Double.parseDouble(s);
+		}catch (NumberFormatException e)
+		{
+			a=false;
+			JOptionPane.showMessageDialog(null,"Bitte geben sie nur Preise mit ('.') ein!","Fehler",JOptionPane.ERROR_MESSAGE);
+			
+		}
+		if(a!=false){
+			s=s.substring(s.indexOf(".")+1);
+			if(s.length()>2)
+				JOptionPane.showMessageDialog(null,"Bitte geben sie nur Zahlen mit zwei Nachkommastellen ein!","Fehler",JOptionPane.ERROR_MESSAGE);
+			else{	
+				
+			 m = (int) (abs+stg1*p+stg2*p*p+stg3*p*p*p);// i ändern um PAF
+			 pelasticity(p,m);
+			}
+		}
+		return m;
+	}
 	
 	public void pelasticity(double p,int m){
 	    double abl= stg1+stg2*2*p+stg3*3*p*p;
-	    double pez= abl*(p/m);
+	    double pez= Math.abs(abl*(p/m));
 	    double pe=Math.round(pez*100.0)/100.0;
 	    
 	    
