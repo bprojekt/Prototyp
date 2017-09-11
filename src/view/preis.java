@@ -373,9 +373,9 @@ public class preis extends JFrame {
 //		return p;
 //	}
 //
-	public int getMenge(String s){
+	public long getMenge(String s){
 		boolean a=true;
-		int m=0;
+		long m=0;
 		double p=0.00;
 		try{
 			p= Double.parseDouble(s);
@@ -386,19 +386,27 @@ public class preis extends JFrame {
 			
 		}
 		if(a!=false){
-			s=s.substring(s.indexOf(".")+1);
-			if(s.length()>2)
+			String k=s.substring(s.indexOf(".")+1);
+			if(k.length()>2 && !s.equals(k))
 				JOptionPane.showMessageDialog(null,"Bitte geben sie nur Zahlen mit zwei Nachkommastellen ein!","Fehler",JOptionPane.ERROR_MESSAGE);
 			else{	
-				
-			 m = (int) (abs+stg1*p+stg2*p*p+stg3*p*p*p);// i ändern um PAF
-			 pelasticity(p,m);
+				if(p>0){
+					m = (long) (abs+stg1*p+stg2*p*p+stg3*p*p*p);// i ändern um PAF
+					if(m<0){
+						m=0;
+						JOptionPane.showMessageDialog(null,"Der eingegebene Preis würde eine negative Menge liefern!","Fehler",JOptionPane.ERROR_MESSAGE);
+					}
+					else
+						 pelasticity(p,m);
+				}
+				else
+					JOptionPane.showMessageDialog(null,"Bitte geben sie keine negativen Preise ein!","Fehler",JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		return m;
 	}
 	
-	public void pelasticity(double p,int m){
+	public void pelasticity(double p,long m){
 	    double abl= stg1+stg2*2*p+stg3*3*p*p;
 	    double pez= Math.abs(abl*(p/m));
 	    double pe=Math.round(pez*100.0)/100.0;
