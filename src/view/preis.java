@@ -29,7 +29,12 @@ public class preis extends JFrame {
 	JLabel artname;
 	JLabel paf;
 	JLabel r2;
+	JLabel pelas;
 	double [][] data;
+	double abs;
+	double stg1;
+	double stg2;
+	double stg3;
 	JLabel prize ;
 	JLabel menge;
 	ArrayList<Artikel> artikel= new ArrayList<Artikel>();
@@ -142,8 +147,8 @@ public class preis extends JFrame {
 		JButton btnNewButton_1 = new JButton("Ermitteln");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(textField_1.getText().length()>0)
-				prize.setText(""+getPreis(textField_1.getText())+"");
+//				if(textField_1.getText().length()>0)
+//				prize.setText(""+getPreis(textField_1.getText())+"");
 			}
 		});
 		btnNewButton_1.setBounds(678, 78, 89, 23);
@@ -209,7 +214,8 @@ public class preis extends JFrame {
 		contentPane.add(lblMenge);
 		
 		menge = new JLabel("0");
-		menge.setBounds(556, 265, 46, 14);
+		menge.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		menge.setBounds(556, 265, 112, 14);
 		contentPane.add(menge);
 		
 		JLabel lblR = new JLabel("R\u00B2:");
@@ -222,6 +228,16 @@ public class preis extends JFrame {
 		contentPane.add(r2);
 		r2.setVisible(false);
 		
+		JLabel lblPreiselastizitt = new JLabel("Preiselastizit\u00E4t:");
+		lblPreiselastizitt.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblPreiselastizitt.setBounds(450, 302, 94, 14);
+		contentPane.add(lblPreiselastizitt);
+		
+		pelas = new JLabel("New label");
+		pelas.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		pelas.setBounds(556, 302, 95, 14);
+		contentPane.add(pelas);
+		pelas.setVisible(false);
 		
 	}
 	
@@ -302,10 +318,10 @@ public class preis extends JFrame {
 	public void regression(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 		
 //		reg.addData(data);
-		double abs= Math.round(cof.get(0).coefID*100.0)/100.0;
-		double stg1= Math.round(cof.get(1).coefID*100.0)/100.0;
-		double stg2= Math.round(cof.get(2).coefID*100.0)/100.0;
-		double stg3= Math.round(cof.get(3).coefID*100.0)/100.0;
+		abs= Math.round(cof.get(0).coefID*100.0)/100.0;
+		stg1= Math.round(cof.get(1).coefID*100.0)/100.0;
+		stg2= Math.round(cof.get(2).coefID*100.0)/100.0;
+		stg3= Math.round(cof.get(3).coefID*100.0)/100.0;
 		System.out.println(+abs+" "+stg1+ " " +stg2+" "+stg3);
 		if(stg1>=0||stg2>=0||stg3>=0)
 		{
@@ -336,30 +352,30 @@ public class preis extends JFrame {
 		
 	}
 	
-	public double getPreis(String menge){
-		double p=0.00;
+//	public double getPreis(String menge){
+//		double p=0.00;
+//		boolean a=true;
+//		int m=0;
+//		try{
+//		m=Integer.parseInt(menge);
+//		}catch (NumberFormatException e)
+//		{
+//			a=false;
+//			JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
+//			
+//		}
+//		if(a!=false){
+//			double abs= Math.round(reg.getIntercept()*100.0)/100.0;
+//			double stg= Math.round(reg.getSlope()*100.0)/100.0;
+//			double i= (m-abs)/stg; // i ändern um PAF
+//			p = Math.round(i*100.0)/100.0;	
+//		}
+//		return p;
+//	}
+//
+	public long getMenge(String s){
 		boolean a=true;
-		int m=0;
-		try{
-		m=Integer.parseInt(menge);
-		}catch (NumberFormatException e)
-		{
-			a=false;
-			JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
-			
-		}
-		if(a!=false){
-			double abs= Math.round(reg.getIntercept()*100.0)/100.0;
-			double stg= Math.round(reg.getSlope()*100.0)/100.0;
-			double i= (m-abs)/stg; // i ändern um PAF
-			p = Math.round(i*100.0)/100.0;	
-		}
-		return p;
-	}
-
-	public double getMenge(String s){
-		boolean a=true;
-		int m=0;
+		long m=0;
 		double p=0.00;
 		try{
 			p= Double.parseDouble(s);
@@ -370,16 +386,37 @@ public class preis extends JFrame {
 			
 		}
 		if(a!=false){
-			s=s.substring(s.indexOf(".")+1);
-			if(s.length()>2)
+			String k=s.substring(s.indexOf(".")+1);
+			if(k.length()>2 && !s.equals(k))
 				JOptionPane.showMessageDialog(null,"Bitte geben sie nur Zahlen mit zwei Nachkommastellen ein!","Fehler",JOptionPane.ERROR_MESSAGE);
 			else{	
-			double abs= Math.round(reg.getIntercept()*100.0)/100.0;
-			double stg= Math.round(reg.getSlope()*100.0)/100.0;
-			 m = (int) (p*stg+abs);// i ändern um PAF
-			//p = Math.round(i*100.0)/100.0;	
+				if(p>0){
+					m = (long) (abs+stg1*p+stg2*p*p+stg3*p*p*p);// i ändern um PAF
+					if(m<0){
+						m=0;
+						JOptionPane.showMessageDialog(null,"Der eingegebene Preis würde eine negative Menge liefern!","Fehler",JOptionPane.ERROR_MESSAGE);
+					}
+					else
+						 pelasticity(p,m);
+				}
+				else
+					JOptionPane.showMessageDialog(null,"Bitte geben sie keine negativen Preise ein!","Fehler",JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		return m;
 	}
+	
+	public void pelasticity(double p,long m){
+	    double abl= stg1+stg2*2*p+stg3*3*p*p;
+	    double pez= Math.abs(abl*(p/m));
+	    double pe=Math.round(pez*100.0)/100.0;
+	    
+	    
+	    pelas.setText(""+pe+"");
+	    pelas.setVisible(true);
+	    
+		
+		
+	}
+	
 }
