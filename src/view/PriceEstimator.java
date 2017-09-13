@@ -84,7 +84,7 @@ public class PriceEstimator extends JFrame {
 		
 		XYPlot plot = chart.getXYPlot();
 		plot.getRangeAxis().setRange(abs,getFunctionArtikel());
-		plot.getDomainAxis().setRange(artikel.get(0).preis, artikel.get(artikel.size()-1).preis);
+		plot.getDomainAxis().setRange(getLOW(),getHigh());
 
 	   
 		plot.getRenderer().setSeriesPaint(0, Color.blue);
@@ -140,4 +140,26 @@ public class PriceEstimator extends JFrame {
 		
 		
 }
+	public double getLOW(){
+		double an = artikel.get(0).preis;
+		for(int i =1;i<artikel.size();i++){
+			if(an>=artikel.get(i).preis)
+				an = artikel.get(i).preis;
+		}
+		
+		return an;
+		
+		
+}	
+	public double getHigh(){
+		double an = artikel.get(0).preis;
+		for(int i =1;i<artikel.size();i++){
+			if(an<=artikel.get(i).preis)
+				an = artikel.get(i).preis;
+		}
+		
+		return an;
+		
+		
+}	
 }
