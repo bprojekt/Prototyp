@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.sql.*;
 import java.util.ArrayList;
 import java.awt.Font;
+import javax.swing.JComboBox;
 
 public class preis extends JFrame {
 
@@ -30,6 +31,7 @@ public class preis extends JFrame {
 	JLabel paf;
 	JLabel r2;
 	JLabel pelas;
+	JComboBox comboBox;
 	double [][] data;
 	double abs;
 	double stg1;
@@ -92,20 +94,20 @@ public class preis extends JFrame {
 		JButton btnNewButton = new JButton("Suchen");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					table(textField.getText());
+					table(textField.getText(),(String)comboBox.getSelectedItem());
 			}
 		});
-		btnNewButton.setBounds(225, 78, 89, 23);
+		btnNewButton.setBounds(227, 107, 89, 23);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblArtikel = new JLabel("Artikel:");
 		lblArtikel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblArtikel.setBounds(20, 132, 46, 14);
+		lblArtikel.setBounds(20, 153, 46, 14);
 		contentPane.add(lblArtikel);
 		
 		artname = new JLabel("New label");
 		artname.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		artname.setBounds(76, 132, 285, 14);
+		artname.setBounds(76, 153, 285, 14);
 		contentPane.add(artname);
 		artname.setVisible(false);
 		
@@ -234,13 +236,24 @@ public class preis extends JFrame {
 		contentPane.add(pelas);
 		pelas.setVisible(false);
 		
+		JLabel lblNewLabel_3 = new JLabel("Quartal:");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_3.setBounds(20, 110, 76, 14);
+		contentPane.add(lblNewLabel_3);
+		
+		String [] quart= {"1.Quartal","2.Quartal","3.Quartal","4.Quartal"};
+		comboBox = new JComboBox<String>(quart);
+		comboBox.setBounds(101, 110, 114, 20);
+		contentPane.add(comboBox);
+		
+		
 	}
 	
 
 
-	public void  table(String s){
+	public void  table(String s,String q){
 		artikel.clear();
-		if(s.length()!=0){
+		if(s.length()!=0&&q.length()!=0){
 		boolean a=true;
 		long id=0;
 		try{
@@ -254,7 +267,7 @@ public class preis extends JFrame {
 //			int i=0;
 			connection c=new connection();
 
-				  c.getconnection(id);
+				  c.getconnection(id,q);
 				  artikel = c.artikel;
 				   for(int m=0 ; m<c.c1.size();m++){
 					   System.out.println("CID: " + c.c1.get(m).coefID + " " + "CN :" + c.c1.get(m).coefname +"\n");
@@ -301,7 +314,7 @@ public class preis extends JFrame {
 //					data[k][1]=artikel.get(k).menge;
 //					
 //				}
-				this.regression(c.c1,c.s1);
+				this.regression2(c.c1,c.s1);
 			
 }
 		else{
@@ -400,8 +413,8 @@ public void regression(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 //			
 //		}
 //		if(a!=false){
-//			double abs= Math.round(reg.getIntercept()*100.0)/100.0;
-//			double stg= Math.round(reg.getSlope()*100.0)/100.0;
+//			abs= Math.round(reg.getIntercept()*100.0)/100.0;
+//			stg= Math.round(reg.getSlope()*100.0)/100.0;
 //			double i= (m-abs)/stg; // i ändern um PAF
 //			p = Math.round(i*100.0)/100.0;	
 //		}
@@ -440,6 +453,38 @@ public void regression(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 		}
 		return m;
 	}
+	public long getMenge2(String s){
+		boolean a=true;
+		long m=0;
+		double p=0.00;
+		try{
+			p= Double.parseDouble(s);
+		}catch (NumberFormatException e)
+		{
+			a=false;
+			JOptionPane.showMessageDialog(null,"Bitte geben sie nur Preise mit ('.') ein!","Fehler",JOptionPane.ERROR_MESSAGE);
+			
+		}
+		if(a!=false){
+			String k=s.substring(s.indexOf(".")+1);
+			if(k.length()>2 && !s.equals(k))
+				JOptionPane.showMessageDialog(null,"Bitte geben sie nur Zahlen mit zwei Nachkommastellen ein!","Fehler",JOptionPane.ERROR_MESSAGE);
+			else{	
+				if(p>0){
+					m = (long) (abs+stg1*p);// i ändern um PAF
+					if(m<0){
+						m=0;
+						JOptionPane.showMessageDialog(null,"Der eingegebene Preis würde eine negative Menge liefern!","Fehler",JOptionPane.ERROR_MESSAGE);
+					}
+					else
+						 pelasticity2(p,m);
+				}
+				else
+					JOptionPane.showMessageDialog(null,"Bitte geben sie keine negativen Preise ein!","Fehler",JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		return m;
+	}
 	
 	public void pelasticity(double p,long m){
 	    double abl= stg1+stg2*2*p+stg3*3*p*p;
@@ -452,6 +497,18 @@ public void regression(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 	    
 	    
 		
+		
+	}
+	public void pelasticity2(double p,long m){
+	    double abl= stg1;
+	    double pez= Math.abs(abl*(p/m));
+	    double pe=Math.round(pez*100.0)/100.0;
+	    
+	    
+	    pelas.setText(""+pe+"");
+	    pelas.setVisible(true);
+	    
+	    
 		
 	}
 	
