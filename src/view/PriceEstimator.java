@@ -12,6 +12,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -81,13 +82,23 @@ public class PriceEstimator extends JFrame {
 				"Price for living area", "Price", "Luckson Gott", inputData,
 				PlotOrientation.VERTICAL, true, true, false);
 		
-		 XYPlot plot = chart.getXYPlot();
-		plot.getRangeAxis().setRange(abs,getFunctionArtikel());
-     	plot.getDomainAxis().setRange(getLOW(),getHigh());
+//		chart.
+//
+//		ValueAxis range = null;
+//		ValueAxis domain = null;
+//		domain.setRange(getLOW(),getHigh());
+//		range.setRange(abs,getFunctionArtikel());
+//		XYPlot p = new XYPlot(inputData,domain,range,chart.getXYPlot().getRenderer());
+//        chart.set
+				XYPlot plot = chart.getXYPlot();
 
-	   
-		plot.getRenderer().setSeriesPaint(0, Color.blue);
-		return chart;
+		plot.getRangeAxis().setRange(abs,getFunctionArtikel());
+		plot.getDomainAxis().setRange(getLOW(),getHigh());
+      plot.getRenderer().setSeriesPaint(0, Color.blue);
+      
+		
+return chart;
+		
 	}
 
 
@@ -110,7 +121,7 @@ public class PriceEstimator extends JFrame {
  
 		// Creates a dataset by taking sample values from the line function
 		XYDataset dataset = DatasetUtilities.sampleFunction2D(linefunction2d,
-				0D,artikel.get(artikel.size()-1).preis,100, "Fitted Regression Line");
+				getLOW(),getHigh(),artikel.size(),"Fitted Regression Line");
  
 		// Draw the line dataset
 		//dfd
