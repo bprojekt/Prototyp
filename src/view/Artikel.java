@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 
 public class Artikel {
 	double preis;
-	int menge;
+	double menge;
 	Artikel()
 	{
 		
 	}
-Artikel(double preis, int menge){
+Artikel(double preis, double menge){
 	this.preis=preis;
 	this.menge=menge;
 }

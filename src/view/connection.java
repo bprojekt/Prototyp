@@ -15,10 +15,13 @@ Connection conn;
 //String driverName = "jdbc:sap://132.252.53.6:39015";
 ArrayList<Coefficient> c1 = new ArrayList<Coefficient>();
 ArrayList<Statics> s1 = new ArrayList<Statics>();
+ArrayList<Artikel> artikel= new ArrayList<Artikel>();
+
 String aname="";
 
 public Connection getconnection(long ean) 
 {
+
 	try {
 	    conn = (Connection)DriverManager.getConnection(url,user,password);
 			Statement s= conn.createStatement();
@@ -66,7 +69,7 @@ public Connection getconnection(long ean)
 			System.out.println("PrepareCall");
 			Statement s2 = conn.createStatement();
             ResultSet d2 = s2.executeQuery("Select * from BPSS1703.PAL_PR_DATA_TBL;");
-            //this.bearbeiteRes(d2);
+            this.bearbeiteRes(d2,0);
             while (d2.next()){
             	System.out.println(d2.getDouble("y"));
             }
@@ -115,12 +118,30 @@ public Connection getconnection(long ean)
 				anzahl ++;
 
 	      }
-	      else
-			anzahl ++;
-//			System.out.println(r1.getDouble("COEFFICIENT_VALUE"));
-//			System.out.println(r1.getString("VARIABLE_NAME"));
+	      else if (ind ==0){
+	    	   
+	    	  while(r1.next()){
+	    		  double x =r1.getDouble("X1");
+	    		  double y =r1.getDouble("Y");
+	    		  Artikel lA  = new Artikel(x,y);
+	    		  artikel.add(lA);
+	    		  System.out.println("X: "+ x + "Y : "+y);
+	    		  
+	    		  anzahl++;
+	    		  
+
+
+	    	  }
+	      }
+	      else{
+	    		anzahl++;  
+	      }
 		}
-		System.out.println("Anzahl:"+ anzahl);
+			System.out.println("Inputable :"+ anzahl);
+//	
+		// Diskutieren über linear und polynom
+		// Diskutieren dass bei geringerem preise weniger verkauft wird
+	
 	}
 }
 
