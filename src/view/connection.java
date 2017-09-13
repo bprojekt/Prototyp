@@ -138,7 +138,7 @@ public Connection getconnection(long ean,String quartal)
 	      }
 	      else if (ind ==0){
 	    	   
-	    	  while(r1.next()){
+	    	
 	    		  double x =r1.getDouble("X1");
 	    		  double y =r1.getDouble("Y");
 	    		  Artikel lA  = new Artikel(x,y);
@@ -149,7 +149,7 @@ public Connection getconnection(long ean,String quartal)
 	    		  
 
 
-	    	  }
+	    	  
 	      }
 	      else{
 	    		anzahl++;  
