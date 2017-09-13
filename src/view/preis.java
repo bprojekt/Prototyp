@@ -521,8 +521,6 @@ public void regression2(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 	    double abl= stg1;
 	    double pez= Math.abs(abl*(p/m));
 	    double pe=Math.round(pez*100.0)/100.0;
-	    
-	    
 	    pelas.setText(""+pe+"");
 	    pelas.setVisible(true);
 	    
