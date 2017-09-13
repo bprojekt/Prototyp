@@ -316,6 +316,7 @@ public class preis extends JFrame {
 //					data[k][1]=artikel.get(k).menge;
 //					
 //				}
+				 if(c.ok==0)
 				this.regression(c.c1,c.s1);
 			
 }

@@ -29,7 +29,6 @@ import org.jfree.ui.RefineryUtilities;
 public class PriceEstimator extends JFrame {
  
 	private static final long serialVersionUID = 1L;
- 
 	XYDataset inputData;
 	JFreeChart chart;
    ArrayList<Artikel> artikel;
@@ -48,10 +47,11 @@ public class PriceEstimator extends JFrame {
  
 		// Create the chart using the sample data
 		chart = createChart(inputData);
- 
+		
 		ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
 		setContentPane(chartPanel);
+		
 	}
  
 	public XYDataset createDatasetFromFile(ArrayList<Artikel>lA) throws IOException {
