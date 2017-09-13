@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
- 
+
+import javax.swing.JFrame;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -24,7 +26,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
  
-public class PriceEstimator extends ApplicationFrame {
+public class PriceEstimator extends JFrame {
  
 	private static final long serialVersionUID = 1L;
  
@@ -37,7 +39,7 @@ public class PriceEstimator extends ApplicationFrame {
    double abs ;
    double stg;
 	public PriceEstimator(ArrayList<Coefficient> c,ArrayList<Artikel> lA, double ab,double steg) throws IOException {
-		super("Technobium - Linear Regression");
+//	super("Technobium - Linear Regression");
           coef = c;
           abs = ab;
           stg = steg;
@@ -120,7 +122,7 @@ public class PriceEstimator extends ApplicationFrame {
 				true, false);
 		xylineandshaperenderer.setSeriesPaint(0, Color.RED);
 		xyplot.setRenderer(1, xylineandshaperenderer);
-		//
+		//7622400883033
 
 		// Select EAN,count (Distinct preis/menge)as eP from Edeka1.BONS where Artikelbezeichnung ='SCHOKOLADE' GROUP BY EAN;
 
