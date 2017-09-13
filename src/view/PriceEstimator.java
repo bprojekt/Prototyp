@@ -121,7 +121,8 @@ return chart;
  
 		// Creates a dataset by taking sample values from the line function
 		XYDataset dataset = DatasetUtilities.sampleFunction2D(linefunction2d,
-				getLOW(),getHigh(),artikel.size(),"Fitted Regression Line");
+				0
+				,getHigh(),artikel.size(),"Fitted Regression Line");
  
 		// Draw the line dataset
 		//dfd
