@@ -113,7 +113,7 @@ public class PriceEstimator extends JFrame {
 				0D,artikel.get(artikel.size()-1).preis,100, "Fitted Regression Line");
  
 		// Draw the line dataset
-		//df
+		//dfd
 		XYPlot xyplot = chart.getXYPlot();
 		xyplot.setDataset(1, dataset);
 		
