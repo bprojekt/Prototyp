@@ -64,6 +64,7 @@ public Connection getconnection(long ean,String quartal)
             ResultSet r3 = s.executeQuery("Select * from BPSS1703.PAL_PR_DATA_TBL;");
             int row=0;
             while (r3.next()){
+            	System.out.println(r3.getDouble("y"));
             	row++;
             }
             if(row>=2){
@@ -79,18 +80,16 @@ public Connection getconnection(long ean,String quartal)
 
                 cst = s1.getMoreResults();
             }
+            System.out.println("PrepareCall");
             }
             else{
             	JOptionPane.showMessageDialog(null,"Preisabsatzfunktion kann nicht bestimmt werden!","Fehler",JOptionPane.ERROR_MESSAGE);
             ok=1;
             }
-			System.out.println("PrepareCall");
 			Statement s2 = conn.createStatement();
             ResultSet d2 = s2.executeQuery("Select * from BPSS1703.PAL_PR_DATA_TBL;");
             this.bearbeiteRes(d2,0);
-            while (d2.next()){
-            	System.out.println(d2.getDouble("y"));
-            }
+            
 
 			conn.close();
 			
