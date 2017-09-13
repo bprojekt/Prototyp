@@ -12,6 +12,7 @@ String url="jdbc:sap://132.252.53.6:39015/?autocommit=false";
 String user="BPSS1703";
 String password="Han56%1!";
 Connection conn;
+int ok=0;
 //String driverName = "jdbc:sap://132.252.53.6:39015";
 ArrayList<Coefficient> c1 = new ArrayList<Coefficient>();
 ArrayList<Statics> s1 = new ArrayList<Statics>();
@@ -79,9 +80,10 @@ public Connection getconnection(long ean,String quartal)
                 cst = s1.getMoreResults();
             }
             }
-            else
+            else{
             	JOptionPane.showMessageDialog(null,"Preisabsatzfunktion kann nicht bestimmt werden!","Fehler",JOptionPane.ERROR_MESSAGE);
-            
+            ok=1;
+            }
 			System.out.println("PrepareCall");
 			Statement s2 = conn.createStatement();
             ResultSet d2 = s2.executeQuery("Select * from BPSS1703.PAL_PR_DATA_TBL;");
