@@ -32,6 +32,7 @@ public class preis extends JFrame {
 	JLabel paf;
 	JLabel r2;
 	JLabel pelas;
+	JButton btnVisuelleDarstellung;
 	JComboBox comboBox;
 	double [][] data;
 	double abs;
@@ -95,6 +96,13 @@ public class preis extends JFrame {
 		JButton btnNewButton = new JButton("Suchen");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+					artname.setVisible(false);
+					paf.setVisible(false);
+					prize.setText("0.00");
+					menge.setText("0");
+					r2.setVisible(false);
+					pelas.setVisible(false);
+					btnVisuelleDarstellung.setEnabled(false);
 					table(textField.getText(),(String)comboBox.getSelectedItem());
 			}
 		});
@@ -159,7 +167,7 @@ public class preis extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 
-		JButton btnVisuelleDarstellung = new JButton("Visuelle Darstellung");
+		btnVisuelleDarstellung = new JButton("Visuelle Darstellung");
 		btnVisuelleDarstellung.setBounds(121, 331, 151, 23);
 		btnVisuelleDarstellung.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -182,6 +190,8 @@ public class preis extends JFrame {
 		});
 		
 		contentPane.add(btnVisuelleDarstellung);
+		btnVisuelleDarstellung.setEnabled(false);
+		
 		JLabel lblAbsatzmengeBestimmen = new JLabel("Absatzmenge bestimmen:");
 		lblAbsatzmengeBestimmen.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblAbsatzmengeBestimmen.setBounds(450, 182, 201, 14);
@@ -200,6 +210,8 @@ public class preis extends JFrame {
 		JButton button = new JButton("Ermitteln");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				pelas.setVisible(false);
+				menge.setText("0");
 				if(textField_2.getText().length()!=0)
 			 menge.setText(""+getMenge(textField_2.getText())+"");
 			}
@@ -316,8 +328,10 @@ public class preis extends JFrame {
 //					data[k][1]=artikel.get(k).menge;
 //					
 //				}
-				 if(c.ok==0)
+				 if(c.ok==0){
 				this.regression(c.c1,c.s1);
+				btnVisuelleDarstellung.setEnabled(true);
+				 }
 			
 }
 		else{
