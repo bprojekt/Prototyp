@@ -143,8 +143,8 @@ public class PriceEstimator extends JFrame {
 	public double getLOW(){
 		double an = artikel.get(0).preis;
 		for(int i =1;i<artikel.size();i++){
-			if(an>=artikel.get(i).menge)
-				an = artikel.get(i).menge;
+			if(an>=artikel.get(i).preis)
+				an = artikel.get(i).preis;
 		}
 		
 		return an;
