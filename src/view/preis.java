@@ -314,7 +314,7 @@ public class preis extends JFrame {
 //					data[k][1]=artikel.get(k).menge;
 //					
 //				}
-				this.regression2(c.c1,c.s1);
+				this.regression(c.c1,c.s1);
 			
 }
 		else{
@@ -324,8 +324,9 @@ public class preis extends JFrame {
 	
 }
 	
-	public void regression2(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
-		
+	public void regression(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
+		  coef = cof;
+
 //		reg.addData(data);
 		abs= Math.round(cof.get(0).coefID*100.0)/100.0;
 		stg1= Math.round(cof.get(1).coefID*100.0)/100.0;
@@ -363,7 +364,7 @@ public class preis extends JFrame {
 		
 	}
 	
-public void regression(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
+public void regression2(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 	  coef = cof;
 		
 //		reg.addData(data);

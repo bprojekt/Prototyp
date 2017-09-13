@@ -97,9 +97,9 @@ public class PriceEstimator extends ApplicationFrame {
 		double []reg  =new double[coef.size()]; 
 		reg[0]= Math.abs(Math.round(coef.get(0).coefID*100.0)/100.0);
 		reg[1]= Math.round(coef.get(1).coefID*100.0)/100.0;
-		reg[2]= Math.round(coef.get(2).coefID*100.0)/100.0;
-		reg[3]= Math.round(coef.get(3).coefID*100.0)/100.0;
-		PolynomialFunction2D linefunction2d = new PolynomialFunction2D (reg);
+//		reg[2]= Math.round(coef.get(2).coefID*100.0)/100.0;
+//		reg[3]= Math.round(coef.get(3).coefID*100.0)/100.0;
+		LineFunction2D linefunction2d = new LineFunction2D (reg[0],reg[1]);
  
 		// Creates a dataset by taking sample values from the line function
 		XYDataset dataset = DatasetUtilities.sampleFunction2D(linefunction2d,
