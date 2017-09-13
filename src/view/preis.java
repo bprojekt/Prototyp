@@ -415,6 +415,7 @@ public class preis extends JFrame {
 	    pelas.setText(""+pe+"");
 	    pelas.setVisible(true);
 	    
+	    
 		
 		
 	}
