@@ -80,11 +80,10 @@ public class PriceEstimator extends JFrame {
 		JFreeChart chart = ChartFactory.createScatterPlot(
 				"Price for living area", "Price", "Luckson Gott", inputData,
 				PlotOrientation.VERTICAL, true, true, false);
- 
 		
-		XYPlot plot = chart.getXYPlot();
+		 XYPlot plot = chart.getXYPlot();
 		plot.getRangeAxis().setRange(abs,getFunctionArtikel());
-		plot.getDomainAxis().setRange(getLOW(),getHigh());
+     	plot.getDomainAxis().setRange(getLOW(),getHigh());
 
 	   
 		plot.getRenderer().setSeriesPaint(0, Color.blue);
