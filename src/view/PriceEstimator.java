@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -25,7 +26,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
  
-public class PriceEstimator extends ApplicationFrame {
+public class PriceEstimator extends JFrame {
  
 	private static final long serialVersionUID = 1L;
 	XYDataset inputData;
@@ -37,7 +38,7 @@ public class PriceEstimator extends ApplicationFrame {
    double abs ;
    double stg;
 	public PriceEstimator(ArrayList<Coefficient> c,ArrayList<Artikel> lA, double ab,double steg) throws IOException {
-		super("Technobium - Linear Regression");
+//	super("Technobium - Linear Regression");
           coef = c;
           abs = ab;
           stg = steg;
@@ -80,7 +81,12 @@ public class PriceEstimator extends ApplicationFrame {
 				"Price for living area", "Price", "Luckson Gott", inputData,
 				PlotOrientation.VERTICAL, true, true, false);
  
+		
 		XYPlot plot = chart.getXYPlot();
+		plot.getRangeAxis().setRange(abs,getFunctionArtikel());
+		plot.getDomainAxis().setRange(artikel.get(0).preis, artikel.get(artikel.size()-1).preis);
+
+	   
 		plot.getRenderer().setSeriesPaint(0, Color.blue);
 		return chart;
 	}
@@ -110,14 +116,28 @@ public class PriceEstimator extends ApplicationFrame {
 		// Draw the line dataset
 		XYPlot xyplot = chart.getXYPlot();
 		xyplot.setDataset(1, dataset);
+		
+	
 		XYLineAndShapeRenderer xylineandshaperenderer = new XYLineAndShapeRenderer(
 				true, false);
 		xylineandshaperenderer.setSeriesPaint(0, Color.RED);
 		xyplot.setRenderer(1, xylineandshaperenderer);
 		//7622400883033
+
 		// Select EAN,count (Distinct preis/menge)as eP from Edeka1.BONS where Artikelbezeichnung ='SCHOKOLADE' GROUP BY EAN;
 
 	}
 	
-//	public int getFunction
+	public int getFunctionArtikel(){
+		double an = artikel.get(0).menge;
+		for(int i =1;i<artikel.size();i++){
+			if(an<=artikel.get(i).menge)
+				an = artikel.get(i).menge;
+		}
+		if(an<abs)
+			return (int) (abs+10);
+		return (int) an;
+		
+		
+}
 }

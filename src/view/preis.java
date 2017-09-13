@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
+import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
 import javax.swing.JLabel;
@@ -170,6 +171,7 @@ public class preis extends JFrame {
 					demo.pack();
    				demo.setVisible(true);
 					demo.drawRegressionLine();
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
