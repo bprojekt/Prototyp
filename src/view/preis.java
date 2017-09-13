@@ -41,6 +41,7 @@ public class preis extends JFrame {
 	SimpleRegression reg= new SimpleRegression();
 	 static int [] p = new int [16];
 	    static int [] m = new int [16];
+	    ArrayList<Coefficient> coef = new ArrayList<Coefficient>();
 	private JTextField textField_1;
 	private JTextField textField_2;
 	/**
@@ -160,24 +161,18 @@ public class preis extends JFrame {
 		btnVisuelleDarstellung.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			 	
-			  
-				for(int i =0; i<p.length ; i++){
-					
-					p[i]= 5*i;
-					m[i]=12*2*i;
-				}
+			
 				PriceEstimator demo;
 				try {
-					demo = new PriceEstimator(p,m);
+    				demo = new PriceEstimator(coef, artikel,abs,stg1);
 					demo.pack();
-					RefineryUtilities.centerFrameOnScreen(demo);
-
-					demo.setVisible(true);
+   				demo.setVisible(true);
 					demo.drawRegressionLine();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
 				
 			}
 		});
@@ -224,7 +219,7 @@ public class preis extends JFrame {
 		contentPane.add(lblR);
 		
 		r2= new JLabel("New label");
-		r2.setBounds(76, 285, 118, 14);
+		r2.setBounds(76, 278, 285, 20);
 		contentPane.add(r2);
 		r2.setVisible(false);
 		
@@ -260,6 +255,7 @@ public class preis extends JFrame {
 			connection c=new connection();
 
 				  c.getconnection(id);
+				  artikel = c.artikel;
 				   for(int m=0 ; m<c.c1.size();m++){
 					   System.out.println("CID: " + c.c1.get(m).coefID + " " + "CN :" + c.c1.get(m).coefname +"\n");
 				   }
@@ -315,7 +311,47 @@ public class preis extends JFrame {
 	
 }
 	
-	public void regression(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
+	public void regression2(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
+		
+//		reg.addData(data);
+		abs= Math.round(cof.get(0).coefID*100.0)/100.0;
+		stg1= Math.round(cof.get(1).coefID*100.0)/100.0;
+//		stg2= Math.round(cof.get(2).coefID*100.0)/100.0;
+//		stg3= Math.round(cof.get(3).coefID*100.0)/100.0;
+		System.out.println(+abs+" "+stg1);
+		if(stg1>=0)
+		{
+			if(stg1>=0)
+				paf.setText("q(p)= " + abs + " + " +stg1+ "*p"); 	
+			if(stg1<0)
+				paf.setText("q(p)= " + abs + " " +stg1+ "*p"); 
+//			if(stg1<0)
+//				paf.setText("q(p)= " + abs + " " +stg1+ "*p"); 
+//			if(stg1>=0&&stg2>=0&&stg3<0)
+//				paf.setText("q(p)= " + abs + " + " +stg1+ "*p+ "); 
+//			if(stg1>=0&&stg2<0&&stg3>=0)	
+//				paf.setText("q(p)= " + abs + " + " +stg1+ "*p"); 
+//			if(stg1<0&&stg2>=0&&stg3>=0)
+//				paf.setText("q(p)= " + abs + " " +stg1+ "*p"); 
+//			if(stg1>=0&&stg2>=0&&stg3>=0)
+//				paf.setText("q(p)= " + abs + " + " +stg1+ "*p"); 
+		
+		}
+		else{
+		paf.setText("q(p)= " + abs + " " +stg1+ "*p "); 
+		}
+		
+		double best=stat.get(0).StatV;
+		r2.setText(" "+best+" ");
+		r2.setVisible(true);
+		paf.setVisible(true);
+		
+		
+		
+	}
+	
+public void regression(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
+	  coef = cof;
 		
 //		reg.addData(data);
 		abs= Math.round(cof.get(0).coefID*100.0)/100.0;
@@ -351,7 +387,6 @@ public class preis extends JFrame {
 		r2.setVisible(true);
 		
 	}
-	
 //	public double getPreis(String menge){
 //		double p=0.00;
 //		boolean a=true;

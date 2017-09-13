@@ -3,6 +3,7 @@ package view;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
  
 import org.jfree.chart.ChartFactory;
@@ -13,6 +14,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.function.LineFunction2D;
+import org.jfree.data.function.PolynomialFunction2D;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.statistics.Regression;
 import org.jfree.data.xy.XYDataset;
@@ -27,15 +29,19 @@ public class PriceEstimator extends ApplicationFrame {
  
 	XYDataset inputData;
 	JFreeChart chart;
-  
+   ArrayList<Artikel> artikel;
+   ArrayList<Coefficient> coef;
 
-	public PriceEstimator(int preis [], int menge[]) throws IOException {
+   
+   double abs ;
+   double stg;
+	public PriceEstimator(ArrayList<Coefficient> c,ArrayList<Artikel> lA, double ab,double steg) throws IOException {
 		super("Technobium - Linear Regression");
- 
-		int[] p = preis;
-		int[] m = menge;
+          coef = c;
+          abs = ab;
+          stg = steg;
 		// Read sample data from prices.txt file and 
-		inputData = createDatasetFromFile(p,m);
+		inputData = createDatasetFromFile(lA);
  
 		// Create the chart using the sample data
 		chart = createChart(inputData);
@@ -45,16 +51,17 @@ public class PriceEstimator extends ApplicationFrame {
 		setContentPane(chartPanel);
 	}
  
-	public XYDataset createDatasetFromFile(int price [], int menge []) throws IOException {
+	public XYDataset createDatasetFromFile(ArrayList<Artikel>lA) throws IOException {
 		
+		artikel =lA;
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		XYSeries series = new XYSeries("Real estate item");
  
 		// Read the price and the living area
-		for (int i=0; i< price.length; i++){
+		for (int i=0; i< lA.size(); i++){
 			
 			
-			series.add(price[i],menge[i]);
+			series.add(lA.get(i).preis,lA.get(i).menge);
 
 			
 		}
@@ -81,23 +88,34 @@ public class PriceEstimator extends ApplicationFrame {
 		// Get the parameters 'a' and 'b' for an equation y = a + b * x,
 		// fitted to the inputData using ordinary least squares regression.
 		// a - regressionParameters[0], b - regressionParameters[1]
-		double regressionParameters[] = Regression.getOLSRegression(inputData,
-				0); // sf
+		double regressionParameters[] = Regression.getOLSRegression(inputData,0); // sf
+		
  
 		// Prepare a line function using the found parameters
-		LineFunction2D linefunction2d = new LineFunction2D(
-				regressionParameters[0], regressionParameters[1]);
+		//LineFunction2D linefunction2d = new LineFunction2D(
+				//regressionParameters[0], regressionParameters[1]);
+		double []reg  =new double[coef.size()]; 
+		reg[0]= Math.abs(Math.round(coef.get(0).coefID*100.0)/100.0);
+		reg[1]= Math.round(coef.get(1).coefID*100.0)/100.0;
+		reg[2]= Math.round(coef.get(2).coefID*100.0)/100.0;
+		reg[3]= Math.round(coef.get(3).coefID*100.0)/100.0;
+		PolynomialFunction2D linefunction2d = new PolynomialFunction2D (reg);
  
 		// Creates a dataset by taking sample values from the line function
 		XYDataset dataset = DatasetUtilities.sampleFunction2D(linefunction2d,
-				0D, 100, 300, "Fitted Regression Line");
+				0D,artikel.get(artikel.size()-1).preis,100, "Fitted Regression Line");
  
 		// Draw the line dataset
 		XYPlot xyplot = chart.getXYPlot();
 		xyplot.setDataset(1, dataset);
 		XYLineAndShapeRenderer xylineandshaperenderer = new XYLineAndShapeRenderer(
 				true, false);
-		xylineandshaperenderer.setSeriesPaint(0, Color.BLACK);
+		xylineandshaperenderer.setSeriesPaint(0, Color.RED);
 		xyplot.setRenderer(1, xylineandshaperenderer);
+		//7622400883033
+		// Select EAN,count (Distinct preis/menge)as eP from Edeka1.BONS where Artikelbezeichnung ='SCHOKOLADE' GROUP BY EAN;
+
 	}
+	
+//	public int getFunction
 }
