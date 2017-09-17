@@ -32,6 +32,7 @@ public class preis extends JFrame {
 	JLabel paf;
 	JLabel r2;
 	JLabel pelas;
+	JLabel month;
 	JButton btnVisuelleDarstellung;
 	JComboBox comboBox;
 	double [][] data;
@@ -103,6 +104,7 @@ public class preis extends JFrame {
 					r2.setVisible(false);
 					pelas.setVisible(false);
 					btnVisuelleDarstellung.setEnabled(false);
+					month.setVisible(false);
 					table(textField.getText(),(String)comboBox.getSelectedItem());
 			}
 		});
@@ -116,13 +118,13 @@ public class preis extends JFrame {
 		
 		artname = new JLabel("New label");
 		artname.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		artname.setBounds(76, 153, 285, 14);
+		artname.setBounds(76, 153, 240, 14);
 		contentPane.add(artname);
 		artname.setVisible(false);
 		
 		JLabel lblNewLabel_1 = new JLabel("Preisabsatzfunktion:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(20, 193, 130, 14);
+		lblNewLabel_1.setBounds(20, 194, 130, 14);
 		contentPane.add(lblNewLabel_1);
 		
 
@@ -168,7 +170,7 @@ public class preis extends JFrame {
 		
 
 		btnVisuelleDarstellung = new JButton("Visuelle Darstellung");
-		btnVisuelleDarstellung.setBounds(121, 331, 151, 23);
+		btnVisuelleDarstellung.setBounds(122, 361, 151, 23);
 		btnVisuelleDarstellung.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			 	
@@ -256,9 +258,38 @@ public class preis extends JFrame {
 		contentPane.add(lblNewLabel_3);
 		
 		String [] quart= {"1.Quartal","2.Quartal","3.Quartal","4.Quartal"};
-		comboBox = new JComboBox<String>(quart);
+		comboBox = new JComboBox <String>(quart);
 		comboBox.setBounds(101, 110, 114, 20);
 		contentPane.add(comboBox);
+		
+		JButton btnSuchen = new JButton("Suchen");
+		btnSuchen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				artname.setVisible(false);
+				paf.setVisible(false);
+				prize.setText("0.00");
+				menge.setText("0");
+				r2.setVisible(false);
+				pelas.setVisible(false);
+				btnVisuelleDarstellung.setEnabled(false);
+				month.setVisible(false);
+				table(textField.getText(),"normal");	
+				}
+			
+		});
+		btnSuchen.setBounds(227, 78, 89, 23);
+		contentPane.add(btnSuchen);
+		
+		JLabel lblMonat = new JLabel("Monat:");
+		lblMonat.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblMonat.setBounds(20, 322, 46, 14);
+		contentPane.add(lblMonat);
+		
+		month = new JLabel("New label");
+		month.setBounds(76, 322, 95, 14);
+		contentPane.add(month);
+		month.setVisible(false);
 		
 		
 	}
@@ -329,6 +360,10 @@ public class preis extends JFrame {
 //					
 //				}
 				 if(c.ok==0){
+					 if(c.monat!=0)
+					 { month.setText(""+c.monat+"");
+					    month.setVisible(true);
+					 }
 				this.regression(c.c1,c.s1);
 				btnVisuelleDarstellung.setEnabled(true);
 				 }
@@ -527,5 +562,4 @@ public void regression2(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 	    
 		
 	}
-	
 }

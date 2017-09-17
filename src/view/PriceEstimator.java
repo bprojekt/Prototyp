@@ -79,7 +79,7 @@ public class PriceEstimator extends JFrame {
 	private JFreeChart createChart(XYDataset inputData) throws IOException {
 		// Create the chart using the data read from the prices.txt file
 		JFreeChart chart = ChartFactory.createScatterPlot(
-				"Price for living area", "Price", "Luckson Gott", inputData,
+				"Preisabsatzfunktion", "Preis", "Menge", inputData,
 				PlotOrientation.VERTICAL, true, true, false);
 		
 //		chart.

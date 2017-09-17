@@ -13,6 +13,7 @@ String user="BPSS1703";
 String password="Han56%1!";
 Connection conn;
 int ok=0;
+int monat=0;
 //String driverName = "jdbc:sap://132.252.53.6:39015";
 ArrayList<Coefficient> c1 = new ArrayList<Coefficient>();
 ArrayList<Statics> s1 = new ArrayList<Statics>();
@@ -59,6 +60,14 @@ public Connection getconnection(long ean,String quartal)
             p3 = conn.prepareStatement("INSERT INTO BPSS1703.PAL_PR_DATA_TBL (Y,X1) select sum(menge),t1.epreis from (select ean,menge,preis,preis/menge as epreis  from EDEKA1.BONS  WHERE month(timestamp)=7 or month(timestamp)=8 or month(timestamp)=9) as t1 where ean='"+ean+"' group by t1.epreis");	
             if(quartal.equals("4.Quartal"))
             p3 = conn.prepareStatement("INSERT INTO BPSS1703.PAL_PR_DATA_TBL (Y,X1) select sum(menge),t1.epreis from (select ean,menge,preis,preis/menge as epreis  from EDEKA1.BONS  WHERE month(timestamp)=10 or month(timestamp)=11 or month(timestamp)=12) as t1 where ean='"+ean+"' group by t1.epreis");
+            if(quartal.equals("normal"))
+            { 
+            	ResultSet r2=s.executeQuery("select min(mon) m from (select count(distinct monat)as mon,epreis from(select month(timestamp)as monat,preis/menge as epreis from Edeka1.bons where ean='"+ean+"') group by epreis)");
+            	while(r2.next()){
+            		 monat= r2.getInt("m");
+            	}
+            	p3 = conn.prepareStatement("INSERT INTO BPSS1703.PAL_PR_DATA_TBL (Y,X1) select sum(m),epreis from (select ROW_NUMBER() OVER   (partition by epreis order by sum(menge) ASC) as r, sum(menge)as m,monat,epreis from (select month(timestamp) as monat,preis/menge as epreis,menge from edeka1.bons where ean='"+ean+"') group by monat,epreis having sum(menge)>0) where r<='"+monat+"' group by epreis");
+            }
             p3.execute();
             System.out.println("Insert3");
             ResultSet r3 = s.executeQuery("Select * from BPSS1703.PAL_PR_DATA_TBL;");
