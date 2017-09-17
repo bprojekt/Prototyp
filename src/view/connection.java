@@ -66,7 +66,7 @@ public Connection getconnection(long ean,String quartal)
             	while(r2.next()){
             		 monat= r2.getInt("m");
             	}
-            	p3 = conn.prepareStatement("INSERT INTO BPSS1703.PAL_PR_DATA_TBL (Y,X1) select sum(m),epreis from (select ROW_NUMBER() OVER   (partition by epreis order by sum(menge) ASC) as r, sum(menge)as m,monat,epreis from (select month(timestamp) as monat,preis/menge as epreis,menge from edeka1.bons where ean='"+ean+"') group by monat,epreis having sum(menge)>0) where r<='"+monat+"' group by epreis");
+            	p3 = conn.prepareStatement("INSERT INTO BPSS1703.PAL_PR_DATA_TBL (Y,X1) select sum(m),epreis from (select ROW_NUMBER() OVER   (partition by epreis order by sum(menge) DESC) as r, sum(menge)as m,monat,epreis from (select month(timestamp) as monat,preis/menge as epreis,menge from edeka1.bons where ean='"+ean+"') group by monat,epreis having sum(menge)>0) where r<='"+monat+"' group by epreis");
             }
             p3.execute();
             System.out.println("Insert3");

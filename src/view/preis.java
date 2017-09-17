@@ -32,6 +32,7 @@ public class preis extends JFrame {
 	JLabel paf;
 	JLabel r2;
 	JLabel pelas;
+	JLabel pelas2;
 	JLabel month;
 	JButton btnVisuelleDarstellung;
 	JComboBox comboBox;
@@ -73,7 +74,7 @@ public class preis extends JFrame {
 		//s
 		setTitle("Preisabsatzfunktion + Bachelorprojekt");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 799, 475);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -103,6 +104,7 @@ public class preis extends JFrame {
 					menge.setText("0");
 					r2.setVisible(false);
 					pelas.setVisible(false);
+					pelas2.setVisible(false);
 					btnVisuelleDarstellung.setEnabled(false);
 					month.setVisible(false);
 					table(textField.getText(),(String)comboBox.getSelectedItem());
@@ -136,7 +138,7 @@ public class preis extends JFrame {
 		
 		JLabel lblNewLabel_2 = new JLabel("Preis bestimmen:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(450, 27, 143, 14);
+		lblNewLabel_2.setBounds(450, 37, 143, 14);
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lblMengeEingeben = new JLabel("Menge eingeben:");
@@ -161,8 +163,10 @@ public class preis extends JFrame {
 		JButton btnNewButton_1 = new JButton("Ermitteln");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				if(textField_1.getText().length()>0)
-//				prize.setText(""+getPreis(textField_1.getText())+"");
+				prize.setText("0.00");
+				pelas2.setVisible(false);
+				if(textField_1.getText().length()>0)
+				prize.setText(""+getPreis(textField_1.getText())+"");
 			}
 		});
 		btnNewButton_1.setBounds(678, 78, 89, 23);
@@ -196,17 +200,17 @@ public class preis extends JFrame {
 		
 		JLabel lblAbsatzmengeBestimmen = new JLabel("Absatzmenge bestimmen:");
 		lblAbsatzmengeBestimmen.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAbsatzmengeBestimmen.setBounds(450, 182, 201, 14);
+		lblAbsatzmengeBestimmen.setBounds(450, 193, 201, 14);
 		contentPane.add(lblAbsatzmengeBestimmen);
 		
 		JLabel lblPreisEingeben = new JLabel("Preis eingeben:");
 		lblPreisEingeben.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblPreisEingeben.setBounds(450, 236, 99, 14);
+		lblPreisEingeben.setBounds(450, 242, 99, 14);
 		contentPane.add(lblPreisEingeben);
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		textField_2.setBounds(556, 234, 112, 20);
+		textField_2.setBounds(556, 240, 112, 20);
 		contentPane.add(textField_2);
 		
 		JButton button = new JButton("Ermitteln");
@@ -218,17 +222,17 @@ public class preis extends JFrame {
 			 menge.setText(""+getMenge(textField_2.getText())+"");
 			}
 		});
-		button.setBounds(678, 233, 89, 23);
+		button.setBounds(678, 239, 89, 23);
 		contentPane.add(button);
 		
 		JLabel lblMenge = new JLabel("Menge:");
 		lblMenge.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblMenge.setBounds(450, 265, 94, 14);
+		lblMenge.setBounds(450, 284, 94, 14);
 		contentPane.add(lblMenge);
 		
 		menge = new JLabel("0");
 		menge.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		menge.setBounds(556, 265, 112, 14);
+		menge.setBounds(556, 284, 112, 14);
 		contentPane.add(menge);
 		
 		JLabel lblR = new JLabel("R\u00B2:");
@@ -243,12 +247,12 @@ public class preis extends JFrame {
 		
 		JLabel lblPreiselastizitt = new JLabel("Preiselastizit\u00E4t:");
 		lblPreiselastizitt.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblPreiselastizitt.setBounds(450, 302, 94, 14);
+		lblPreiselastizitt.setBounds(450, 322, 94, 14);
 		contentPane.add(lblPreiselastizitt);
 		
 		pelas = new JLabel("New label");
 		pelas.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		pelas.setBounds(556, 302, 95, 14);
+		pelas.setBounds(556, 322, 95, 14);
 		contentPane.add(pelas);
 		pelas.setVisible(false);
 		
@@ -258,7 +262,7 @@ public class preis extends JFrame {
 		contentPane.add(lblNewLabel_3);
 		
 		String [] quart= {"1.Quartal","2.Quartal","3.Quartal","4.Quartal"};
-		comboBox = new JComboBox <String>(quart);
+		comboBox = new JComboBox<String>(quart);
 		comboBox.setBounds(101, 110, 114, 20);
 		contentPane.add(comboBox);
 		
@@ -272,6 +276,7 @@ public class preis extends JFrame {
 				menge.setText("0");
 				r2.setVisible(false);
 				pelas.setVisible(false);
+				pelas2.setVisible(false);
 				btnVisuelleDarstellung.setEnabled(false);
 				month.setVisible(false);
 				table(textField.getText(),"normal");	
@@ -290,6 +295,18 @@ public class preis extends JFrame {
 		month.setBounds(76, 322, 95, 14);
 		contentPane.add(month);
 		month.setVisible(false);
+		
+		JLabel label = new JLabel("Preiselastizit\u00E4t:");
+		label.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		label.setBounds(450, 153, 94, 14);
+		contentPane.add(label);
+		
+		pelas2 = new JLabel("New label");
+		pelas2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		pelas2.setBounds(556, 153, 94, 14);
+		contentPane.add(pelas2);
+		pelas2.setVisible(false);
+		
 		
 		
 	}
@@ -453,27 +470,36 @@ public void regression2(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 		r2.setVisible(true);
 		
 	}
-//	public double getPreis(String menge){
-//		double p=0.00;
-//		boolean a=true;
-//		int m=0;
-//		try{
-//		m=Integer.parseInt(menge);
-//		}catch (NumberFormatException e)
-//		{
-//			a=false;
-//			JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
-//			
-//		}
-//		if(a!=false){
-//			abs= Math.round(reg.getIntercept()*100.0)/100.0;
-//			stg= Math.round(reg.getSlope()*100.0)/100.0;
-//			double i= (m-abs)/stg; // i ändern um PAF
-//			p = Math.round(i*100.0)/100.0;	
-//		}
-//		return p;
-//	}
-//
+	public double getPreis(String menge){
+		double p=0.00;
+		boolean a=true;
+		int m=0;
+		try{
+		m=Integer.parseInt(menge);
+		}catch (NumberFormatException e)
+		{
+			a=false;
+			JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
+			
+		}
+		if(a!=false){
+			if(m>0){
+			double i= (m-abs)/stg1; // i ändern um PAF
+			p = Math.round(i*100.0)/100.0;	
+			if(p<0)
+			{p=Math.round(0.00*100.0)/100.0;
+			 JOptionPane.showMessageDialog(null,"Der eingegebene Menge würde eine negativen Preis liefern!","Fehler",JOptionPane.ERROR_MESSAGE);
+			}
+			else
+				 pelasticity2(p,m,1);
+			}
+			else
+				JOptionPane.showMessageDialog(null,"Bitte geben sie nur ganzahlige Zahlen ein","Fehler",JOptionPane.ERROR_MESSAGE);
+				
+		}
+		return p;
+	}
+
 	public long getMenge(String s){
 		boolean a=true;
 		long m=0;
@@ -498,7 +524,7 @@ public void regression2(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 						JOptionPane.showMessageDialog(null,"Der eingegebene Preis würde eine negative Menge liefern!","Fehler",JOptionPane.ERROR_MESSAGE);
 					}
 					else
-						 pelasticity(p,m);
+						 pelasticity(p,m,2);
 				}
 				else
 					JOptionPane.showMessageDialog(null,"Bitte geben sie keine negativen Preise ein!","Fehler",JOptionPane.ERROR_MESSAGE);
@@ -530,7 +556,7 @@ public void regression2(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 						JOptionPane.showMessageDialog(null,"Der eingegebene Preis würde eine negative Menge liefern!","Fehler",JOptionPane.ERROR_MESSAGE);
 					}
 					else
-						 pelasticity2(p,m);
+						 pelasticity2(p,m,2);
 				}
 				else
 					JOptionPane.showMessageDialog(null,"Bitte geben sie keine negativen Preise ein!","Fehler",JOptionPane.ERROR_MESSAGE);
@@ -539,7 +565,7 @@ public void regression2(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 		return m;
 	}
 	
-	public void pelasticity(double p,long m){
+	public void pelasticity(double p,long m,int w){
 	    double abl= stg1+stg2*2*p+stg3*3*p*p;
 	    double pez= Math.abs(abl*(p/m));
 	    double pe=Math.round(pez*100.0)/100.0;
@@ -552,13 +578,20 @@ public void regression2(ArrayList<Coefficient> cof,ArrayList<Statics> stat){
 		
 		
 	}
-	public void pelasticity2(double p,long m){
-	    double abl= stg1;
+	public void pelasticity2(double p,long m,int w){
+	   double abl= stg1;
 	    double pez= Math.abs(abl*(p/m));
 	    double pe=Math.round(pez*100.0)/100.0;
+	   
+	    if(w==1){
+		    pelas2.setText(""+pe+"");
+		    pelas2.setVisible(true);
+		   }
+		     
+	   if(w==2){
 	    pelas.setText(""+pe+"");
 	    pelas.setVisible(true);
-	    
+	   }
 	    
 		
 	}
